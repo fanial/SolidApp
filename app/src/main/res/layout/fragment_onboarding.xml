@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.OnboardingFragment"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/img_corner_top_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/img_logo_app"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/corner_top_1"
+        android:layout_marginBottom="70dp"/>
+
+    <ImageView
+        android:id="@+id/img_logo_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/label_judul"
+        android:src="@drawable/logo1"
+        />
+
+    <TextView
+        android:id="@+id/label_judul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:text="Solusi Limbah Indonesia"
+        android:layout_marginTop="20dp"
+        android:textSize="24sp"
+        android:fontFamily="@font/notobold"
+        android:textColor="?attr/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/label_subjudul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_judul"
+        android:textSize="16sp"
+        android:gravity="center_horizontal"
+        android:text="Aplikasi monitoring pengolahan sampah"
+        android:textColor="@color/md_theme_primary"
+        />
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_subjudul"
+        android:background="@drawable/shape_corner"
+        android:text="Mulai"
+        android:layout_marginTop="50dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:id="@+id/img_bottom_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_start"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/corner_bottom_1"
+        android:layout_marginTop="100dp"/>
+
+</RelativeLayout>
