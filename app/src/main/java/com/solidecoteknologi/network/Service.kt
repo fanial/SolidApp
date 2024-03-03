@@ -38,9 +38,7 @@ interface Service {
     ) : Response<ResponseProfile>
 
     @GET("category")
-    suspend fun category(
-        @Header("Authorization") token : String
-    ) : Response<ResponseCategory>
+    suspend fun category() : Response<ResponseCategory>
 
     @GET("organization")
     suspend fun organization(

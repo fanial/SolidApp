@@ -23,15 +23,16 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(private val store: DataStoreManager, private val service: Service): ViewModel() {
 
     //Data Store
-    fun setToken(token: String, name: String, status: Boolean){
+    fun setToken(token: String, idAcc: String, status: Boolean){
         viewModelScope.launch {
-            store.saveDataStore(token, name, status)
+            store.saveDataStore(token, idAcc, status)
         }
     }
 
+    fun  getStoredAccount() = store.getStoredValues().asLiveData()
     fun getToken() = store.getToken().asLiveData()
 
-    fun getName() = store.getName().asLiveData()
+    fun getName() = store.getIdAccount().asLiveData()
 
     fun getStatus()= store.getStatus().asLiveData()
     fun logout(){
@@ -88,12 +89,12 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         }
     }
 
-    //Login
+    //Register
     private val dataRegister : MutableLiveData<ResponseRegister?> = MutableLiveData()
     fun dataRegister() : MutableLiveData<ResponseRegister?> {
         return dataRegister
     }
-    fun register(name : String, email : String, password : String, passValidation : String, role : String, organization : Int) {
+    fun register(name : String, email : String, password : String, passValidation : String, role : String, organization : String) {
         viewModelScope.launch {
             _loading.value = true
             try {

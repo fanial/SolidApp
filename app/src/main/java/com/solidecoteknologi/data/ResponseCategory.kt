@@ -4,11 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseCategory(
 
-	@field:SerializedName("ResponseCategory")
-	val responseCategory: List<ResponseCategoryItem>
+	@field:SerializedName("data")
+	val data: List<DataCategoryItem>,
+
+	@field:SerializedName("success")
+	val success: Boolean,
+
+	@field:SerializedName("message")
+	val message: String
 )
 
-data class ResponseCategoryItem(
+data class DataCategoryItem(
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,

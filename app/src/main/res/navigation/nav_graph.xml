@@ -66,10 +66,24 @@
         android:id="@+id/profileFragment"
         android:name="com.solidecoteknologi.view.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.solidecoteknologi.view.ReportFragment"
         android:label="fragment_report"
-        tools:layout="@layout/fragment_report" />
+        tools:layout="@layout/fragment_report" >
+        <action
+            android:id="@+id/action_reportFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_reportFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

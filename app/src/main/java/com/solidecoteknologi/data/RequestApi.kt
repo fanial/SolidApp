@@ -32,18 +32,18 @@ data class RequestRegister(
     val role: String,
 
     @field:SerializedName("organization")
-    val organization: Int
+    val organization: String
 ) : Parcelable
 
 @Parcelize
 data class RequestStoreWaste(
     @field:SerializedName("account")
-    val account: String,
+    val account: Int,
 
     @field:SerializedName("weight")
-    val weight: String,
+    val weight: Int,
 
     @field:SerializedName("category")
-    val category: String
+    val category: Int
 
 ) : Parcelable

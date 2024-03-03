@@ -14,19 +14,26 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
         pref[TOKEN] ?: ""
     }
 
-    fun getName(): Flow<String> = setDataStore.data.map { pref ->
-        pref[NAMEKEY] ?: ""
+    fun getIdAccount(): Flow<String> = setDataStore.data.map { pref ->
+        pref[IDACC] ?: ""
     }
 
     fun getStatus(): Flow<Boolean> = setDataStore.data.map { pref ->
         pref[ISLOGIN] ?: false
     }
-    suspend fun saveDataStore(isToken : String, isName: String, isLogin: Boolean) {
+    suspend fun saveDataStore(isToken : String, isId: String, isLogin: Boolean) {
         setDataStore.edit { preferences ->
             preferences[TOKEN] = isToken
-            preferences[NAMEKEY] = isName
+            preferences[IDACC] = isId
             preferences[ISLOGIN] = isLogin
         }
+    }
+
+    fun getStoredValues(): Flow<DataAccountValues> = setDataStore.data.map { pref ->
+        DataAccountValues(
+            token = pref[TOKEN] ?: "",
+            idAccount = pref[IDACC] ?: ""
+        )
     }
 
     suspend fun delete(){
@@ -35,7 +42,13 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
 
     companion object {
         private val TOKEN = stringPreferencesKey("token")
-        private val NAMEKEY = stringPreferencesKey("name")
+        private val IDACC = stringPreferencesKey("idAcc")
         private val ISLOGIN = booleanPreferencesKey("isLogin")
+        private val ACCOUNT = stringPreferencesKey("account")
     }
 }
+
+data class DataAccountValues(
+    val token: String,
+    val idAccount: String
+)

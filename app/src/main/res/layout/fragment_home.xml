@@ -56,6 +56,9 @@
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/pencil_icon"
                 app:endIconMode="custom"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                style="?attr/textInputFilledStyle"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -63,29 +66,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
-                    android:text="Masukan Berat Sampah" />
+                    android:hint="Masukan Berat Sampah" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_kategori"
+            <TextView
+                android:id="@+id/ed_kategori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:endIconDrawable="@drawable/expand_circle_down"
-                app:endIconMode="custom"
-                app:errorEnabled="true">
+                android:text="Pilih Kategori"
+                android:textSize="16sp"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20sp"
+                android:textColor="@color/md_theme_primary"
+                android:background="@drawable/shape_edit_text"
+                app:drawableEndCompat="@drawable/expand_circle_down" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_kategori"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_category"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:background="@color/md_theme_primary"
+                    android:id="@+id/list_category"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
-                    android:background="@drawable/shape_edit_text"
-                    android:text="Pilih Kategori" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    tools:listitem="@layout/layout_dropdown" />
+            </com.google.android.material.card.MaterialCardView>
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_masuk"
+                android:id="@+id/btn_kirim"
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:layout_marginTop="50dp"

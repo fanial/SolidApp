@@ -1,60 +1,121 @@
 package com.solidecoteknologi.view
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.solidecoteknologi.R
+import com.solidecoteknologi.databinding.FragmentHomeBinding
+import com.solidecoteknologi.view.adapter.CategoryAdapter
+import com.solidecoteknologi.viewmodel.AuthViewModel
+import com.solidecoteknologi.viewmodel.TransactionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding : FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    private val modelTransaction : TransactionViewModel by viewModels()
+    private val model : AuthViewModel by viewModels()
+    private var token = ""
+    private var idAccount = ""
+    private var doubleBackToExitPressedOnce = false
+    private val adapter by lazy { CategoryAdapter() }
+    private var isCategoryClicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupObservers()
+        setupListener()
+        setupModel()
+        setupViews()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            if (doubleBackToExitPressedOnce) {
+                requireActivity().finish()
+                return@addCallback
             }
+
+            doubleBackToExitPressedOnce = true
+            Toast.makeText(requireContext(),"Tekan 2x untuk keluar dari aplikasi", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({
+                doubleBackToExitPressedOnce = false
+            }, 2)
+        }
+
+    }
+
+    private fun setupViews() {
+        binding.listCategory.adapter = adapter
+        val layout = LinearLayoutManager(context)
+        binding.listCategory.layoutManager = layout
+
+    }
+
+    private fun setupModel() {
+        modelTransaction.listCategory()
+
+    }
+
+    private fun setupListener() {
+        binding.profile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
+        binding.report.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_reportFragment)
+        }
+
+        binding.btnKirim.setOnClickListener {
+            val qty = binding.edQty.text.toString()
+
+        }
+
+        binding.edKategori.setOnClickListener {
+
+        }
+
+
+    }
+
+    private fun setupObservers() {
+        model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        model.getStoredAccount().observe(viewLifecycleOwner){ data ->
+            if (data != null) {
+                token = data.token
+                idAccount = data.idAccount
+            }
+        }
+
+        modelTransaction.dataCategory().observe(viewLifecycleOwner){ listCat ->
+            if (listCat != null){
+                adapter.setData(listCat.data.toMutableList())
+            }
+        }
     }
 }

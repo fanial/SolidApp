@@ -46,7 +46,6 @@
                 android:id="@+id/label_subjudul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/label_judul"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/notolight"
                 android:text="Silahkan isi untuk daftarkan akun Anda"
@@ -60,14 +59,18 @@
                 android:layout_below="@id/label_subjudul"
                 app:endIconDrawable="@drawable/pencil_icon"
                 app:endIconMode="custom"
-                app:errorEnabled="true">
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                style="?attr/textInputFilledStyle"
+                app:errorEnabled="true"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_nama"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
-                    android:text="Nama" />
+                    android:hint="Nama" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,9 +78,11 @@
                 android:id="@+id/layout_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/label_subjudul"
                 app:endIconDrawable="@drawable/email_icon"
                 app:endIconMode="custom"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                style="?attr/textInputFilledStyle"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -85,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
-                    android:text="Alamat Email" />
+                    android:hint="Alamat Email" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,9 +98,11 @@
                 android:id="@+id/layout_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/label_subjudul"
                 app:endIconDrawable="@drawable/pin_icon"
                 app:endIconMode="custom"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                style="?attr/textInputFilledStyle"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -103,7 +110,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
-                    android:text="Password" />
+                    android:hint="Password" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_password_validation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/pin_icon"
+                app:endIconMode="custom"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                style="?attr/textInputFilledStyle"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_password_validation"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:background="@drawable/shape_edit_text"
+                    android:hint="Confirmation Password" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,6 +141,9 @@
                 android:layout_below="@id/label_subjudul"
                 app:endIconDrawable="@drawable/expand_circle_down"
                 app:endIconMode="custom"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                style="?attr/textInputFilledStyle"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -121,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
-                    android:text="Pilih Instansi" />
+                    android:hint="Pilih Instansi" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,9 +159,11 @@
                 android:id="@+id/layout_role"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/label_subjudul"
                 app:endIconDrawable="@drawable/expand_circle_down"
                 app:endIconMode="custom"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                style="?attr/textInputFilledStyle"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -139,7 +171,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
-                    android:text="Pilih Role" />
+                    android:hint="Pilih Role" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
