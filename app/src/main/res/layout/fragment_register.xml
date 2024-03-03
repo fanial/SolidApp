@@ -14,170 +14,170 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/corner_top_2" />
 
-    <ImageView
-        android:id="@+id/img_logo_app"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_corner_top_1"
-        android:src="@drawable/daftar_icon"
-        />
+        android:layout_centerInParent="true">
 
-
-    <LinearLayout
-        android:id="@+id/layout_form"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/img_logo_app"
-        android:layout_centerInParent="true"
-        android:padding="20dp">
-
-        <TextView
-            android:id="@+id/label_judul"
+        <LinearLayout
+            android:id="@+id/layout_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/notobold"
-            android:text="Daftar"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="24sp" />
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <TextView
-            android:id="@+id/label_subjudul"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_judul"
-            android:textSize="16sp"
-            android:text="Silahkan isi untuk daftarkan akun Anda"
-            android:textColor="@color/md_theme_primary"
-            />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_nama"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_subjudul"
-            android:hint="Nama"
-            app:endIconDrawable="@drawable/pencil_icon"
-            app:endIconMode="custom"
-            app:errorEnabled="true"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_nama"
+            <ImageView
+                android:id="@+id/img_logo_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:src="@drawable/daftar_icon" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_subjudul"
-            android:hint="Alamat Email"
-            app:endIconDrawable="@drawable/email_icon"
-            app:endIconMode="custom"
-            app:errorEnabled="true"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_email"
+            <TextView
+                android:id="@+id/label_judul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:fontFamily="@font/notobold"
+                android:text="Daftar"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_subjudul"
-            android:hint="Password"
-            app:endIconDrawable="@drawable/pin_icon"
-            app:endIconMode="custom"
-            app:errorEnabled="true"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_password"
+            <TextView
+                android:id="@+id/label_subjudul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_below="@id/label_judul"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/notolight"
+                android:text="Silahkan isi untuk daftarkan akun Anda"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="16sp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_instansi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_subjudul"
-            android:hint="Pilih Instansi"
-            app:endIconDrawable="@drawable/dropdown_icon"
-            app:endIconMode="custom"
-            app:errorEnabled="true"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_instansi"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_below="@id/label_subjudul"
+                app:endIconDrawable="@drawable/pencil_icon"
+                app:endIconMode="custom"
+                app:errorEnabled="true">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:background="@drawable/shape_edit_text"
+                    android:text="Nama" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layout_role"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_subjudul"
-            android:hint="Pilih Role"
-            app:endIconDrawable="@drawable/dropdown_icon"
-            app:endIconMode="custom"
-            app:errorEnabled="true"
-            >
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ed_role"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_below="@id/label_subjudul"
+                app:endIconDrawable="@drawable/email_icon"
+                app:endIconMode="custom"
+                app:errorEnabled="true">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:background="@drawable/shape_edit_text"
+                    android:text="Alamat Email" />
 
-    </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/layout_form">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_subjudul"
+                app:endIconDrawable="@drawable/pin_icon"
+                app:endIconMode="custom"
+                app:errorEnabled="true">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_kembali"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_corner"
-            android:paddingStart="50dp"
-            android:paddingEnd="50dp"
-            android:text="Kembali"
-            app:backgroundTint="@color/md_theme_tertiary"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/black"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:background="@drawable/shape_edit_text"
+                    android:text="Password" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_daftar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_corner"
-            android:text="Daftar"
-            android:paddingStart="50dp"
-            android:paddingEnd="50dp"
-            android:layout_marginStart="10dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_instansi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_subjudul"
+                app:endIconDrawable="@drawable/expand_circle_down"
+                app:endIconMode="custom"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_instansi"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:background="@drawable/shape_edit_text"
+                    android:text="Pilih Instansi" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_subjudul"
+                app:endIconDrawable="@drawable/expand_circle_down"
+                app:endIconMode="custom"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_role"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:background="@drawable/shape_edit_text"
+                    android:text="Pilih Role" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_kembali"
+                    android:layout_width="wrap_content"
+                    android:layout_height="61dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/shape_corner"
+                    android:paddingStart="60dp"
+                    android:paddingEnd="60dp"
+                    android:text="Kembali"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/md_theme_tertiary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_daftar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="61dp"
+                    android:layout_marginStart="17dp"
+                    android:background="@drawable/shape_corner"
+                    android:paddingStart="65dp"
+                    android:paddingEnd="65dp"
+                    android:text="Daftar" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
 
 
 </RelativeLayout>

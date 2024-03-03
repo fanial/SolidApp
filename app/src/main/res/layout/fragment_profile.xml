@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.ProfileFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/label_judul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_profile"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                app:cardCornerRadius="100dp"
+                android:layout_below="@id/label_judul"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                app:strokeWidth="3dp"
+                app:strokeColor="@color/md_theme_primary"
+                >
+                <ImageView
+                    android:id="@+id/photo_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/profile_icon"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:layout_width="41dp"
+                android:layout_height="41dp"
+                android:layout_alignEnd="@+id/card_profile"
+                android:layout_alignBottom="@+id/card_profile"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="-10dp"
+                android:src="@drawable/camera_icon" />
+
+            <TextView
+                android:id="@+id/btn_simpan_perubahan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Simpan Perubahan"
+                android:gravity="end"
+                android:fontFamily="@font/notomedium"
+                android:paddingEnd="20dp"
+                android:layout_below="@id/card_profile"
+                android:layout_marginTop="20dp"/>
+            <LinearLayout
+                android:layout_below="@id/btn_simpan_perubahan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:endIconDrawable="@drawable/pencil_icon"
+                    app:endIconMode="custom"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ed_nama"
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:background="@drawable/shape_edit_text"
+                        android:text="Nama" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_subjudul"
+                    app:endIconDrawable="@drawable/email_icon"
+                    app:endIconMode="custom"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ed_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:background="@drawable/shape_disable_edit_text"
+                        android:text="Alamat Email" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_subjudul"
+                    app:endIconDrawable="@drawable/pin_icon"
+                    app:endIconMode="custom"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ed_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:background="@drawable/shape_disable_edit_text"
+                        android:text="Password" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_instansi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_subjudul"
+                    app:endIconMode="custom"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ed_instansi"
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:background="@drawable/shape_disable_edit_text"
+                        android:text="Pilih Instansi" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!--  Bottom Bar  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_app_bar"
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        >
+        <ImageView
+            android:id="@+id/report"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="9dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="80dp"
+            android:src="@drawable/report_icon"
+            app:tint="@color/md_theme_tertiary" />
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="7dp"
+            android:src="@drawable/home_icon"
+            app:tint="@color/md_theme_tertiary" />
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="80dp"
+            android:src="@drawable/profile_icon"
+            app:tint="@color/md_theme_primary" />
+    </LinearLayout>
+
+</RelativeLayout>

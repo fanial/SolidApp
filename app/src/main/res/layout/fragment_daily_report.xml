@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.DailyReportFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        android:layout_margin="20dp"
+        style="?attr/materialCardViewElevatedStyle"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/waktu_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hari, tgl bulan tahun"
+                android:fontFamily="@font/notomedium"
+                android:layout_marginBottom="10dp"/>
+
+            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
+                android:id="@+id/aa_chart_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <TextView
+        android:id="@+id/label_judul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_pie_chart"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toStartOf="@+id/filter"
+        android:text="Diagram Sampah"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/card_pie_chart"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="25dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_organik"
+        android:layout_below="@id/label_judul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeColor="@color/md_theme_primary"
+        app:strokeWidth="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img_organik"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/organic_icon"
+                android:padding="15dp"/>
+
+            <TextView
+                android:id="@+id/label_type_organik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_organik"
+                android:text="Organik"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/jumlah_persen_organik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_organik"
+                android:text="100%"
+                android:textSize="20dp"
+                android:layout_below="@id/label_type_organik"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_anorganik"
+        android:layout_below="@id/card_organik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeColor="@color/md_theme_primary"
+        app:strokeWidth="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img_anorganik"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/anorganic_icon"
+                android:padding="15dp"/>
+
+            <TextView
+                android:id="@+id/label_type_anorganik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_anorganik"
+                android:text="Anorganik"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/jumlah_persen_anorganik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_anorganik"
+                android:text="100%"
+                android:textSize="20dp"
+                android:layout_below="@id/label_type_anorganik"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_b3"
+        android:layout_below="@id/card_anorganik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeColor="@color/md_theme_primary"
+        app:strokeWidth="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img_b3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/b3_icon"
+                android:padding="15dp"/>
+
+            <TextView
+                android:id="@+id/label_type_b3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_b3"
+                android:text="B3"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/jumlah_persen_b3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_b3"
+                android:text="100%"
+                android:textSize="20dp"
+                android:layout_below="@id/label_type_b3"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</RelativeLayout>

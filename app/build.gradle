@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -53,5 +55,36 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
 
+    //Pie Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:7.2.1'
 
+    //Depedency Injection
+    implementation "com.google.dagger:hilt-android:2.49"
+    kapt "com.google.dagger:hilt-compiler:2.49"
+    implementation "androidx.hilt:hilt-work:1.2.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+
+    //LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.7.0"
+
+    //ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
+    implementation "androidx.activity:activity-ktx:1.8.2"
+
+    // Image Loader
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+    kapt "androidx.lifecycle:lifecycle-common-java8:2.7.0"
+
+    //Datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore-preferences-core:1.0.0"
+
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+}
+//Allow references to generated code
+kapt {
+    correctErrorTypes true
 }

@@ -4,5 +4,7 @@
         <item>@font/notosans</item>
         <item>@font/notobold</item>
         <item>@font/notolight</item>
+        <item>@font/notomedium</item>
+        <item>@font/notoextrabold</item>
     </string-array>
 </resources>
