@@ -11,9 +11,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.net.SocketTimeoutException
+import javax.inject.Inject
 
 @HiltViewModel
-class TransactionViewModel(private val service: Service): ViewModel() {
+class TransactionViewModel @Inject constructor(private val service: Service): ViewModel() {
 
     //Live Data
     private val _loading = MutableLiveData<Boolean>()

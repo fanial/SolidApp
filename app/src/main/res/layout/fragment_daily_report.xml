@@ -27,12 +27,6 @@
                 android:fontFamily="@font/notomedium"
                 android:layout_marginBottom="10dp"/>
 
-            <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
-                android:id="@+id/aa_chart_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </com.github.aachartmodel.aainfographics.aachartcreator.AAChartView>
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

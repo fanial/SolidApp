@@ -8,10 +8,8 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nestedScrollView"
+        android:layout_height="117dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="73dp"
         android:src="@drawable/corner_bottom_2" />
 
     <androidx.core.widget.NestedScrollView
@@ -68,11 +66,11 @@
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ed_nama"
+                        android:id="@+id/ed_email"
                         android:layout_width="match_parent"
                         android:layout_height="62dp"
                         android:background="@drawable/shape_edit_text"
-                        android:text="Nama" />
+                        android:text="Email" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

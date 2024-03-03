@@ -11,7 +11,11 @@ import javax.inject.Inject
 
 class DataStoreManager @Inject constructor(private val setDataStore : DataStore<Preferences>){
     fun getToken(): Flow<String> = setDataStore.data.map { pref ->
-        pref[TOKEN] ?: "undefined"
+        pref[TOKEN] ?: ""
+    }
+
+    fun getName(): Flow<String> = setDataStore.data.map { pref ->
+        pref[NAMEKEY] ?: ""
     }
 
     fun getStatus(): Flow<Boolean> = setDataStore.data.map { pref ->

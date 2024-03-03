@@ -31,6 +31,8 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
 
     fun getToken() = store.getToken().asLiveData()
 
+    fun getName() = store.getName().asLiveData()
+
     fun getStatus()= store.getStatus().asLiveData()
     fun logout(){
         viewModelScope.launch { store.delete() }
@@ -78,9 +80,10 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
             }
         } else {
             // Handle error response
+            dataLogin.postValue(null)
             val errorCode = response.code()
-            val msg = response.message()
-            errorMessage.value = "Error $errorCode: $msg"
+            val msg = "Opsss! Something Wrong"
+            errorMessage.value = "$errorCode: $msg"
             Log.e(ContentValues.TAG, "$errorMessage")
         }
     }
