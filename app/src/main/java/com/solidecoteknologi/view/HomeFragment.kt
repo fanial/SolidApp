@@ -2,12 +2,10 @@ package com.solidecoteknologi.view
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,7 +29,6 @@ class HomeFragment : Fragment() {
     private val model : AuthViewModel by viewModels()
     private var token = ""
     private var idAccount = ""
-    private var doubleBackToExitPressedOnce = false
     private val adapter by lazy { CategoryAdapter() }
     private var isCategoryClicked = false
     private  var idCategory = ""
@@ -53,17 +50,8 @@ class HomeFragment : Fragment() {
         setupViews()
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (doubleBackToExitPressedOnce) {
-                requireActivity().finish()
-                return@addCallback
-            }
-
-            doubleBackToExitPressedOnce = true
-            Toast.makeText(requireContext(),getString(R.string.tekan_lagi_untuk_keluar), Toast.LENGTH_SHORT).show()
-
-            Handler().postDelayed({
-                doubleBackToExitPressedOnce = false
-            }, 2)
+            requireActivity().finish()
+            return@addCallback
         }
 
     }

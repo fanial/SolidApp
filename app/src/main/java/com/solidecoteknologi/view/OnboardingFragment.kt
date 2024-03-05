@@ -1,11 +1,9 @@
 package com.solidecoteknologi.view
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,7 +22,6 @@ class OnboardingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val model : AuthViewModel by viewModels()
-    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,21 +56,8 @@ class OnboardingFragment : Fragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (doubleBackToExitPressedOnce) {
-                requireActivity().finish()
-                return@addCallback
-            }
-
-            doubleBackToExitPressedOnce = true
-            Toast.makeText(requireContext(),
-                getString(R.string.tekan_lagi_untuk_keluar), Toast.LENGTH_SHORT).show()
-
-            Handler().postDelayed({
-                doubleBackToExitPressedOnce = false
-            }, 2000)
+            requireActivity().finish()
+            return@addCallback
         }
-    }
-    companion object {
-
     }
 }
