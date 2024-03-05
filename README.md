@@ -1,9 +1,10 @@
 Features Functionality
 - [x] OnBoarding
-- [ ] Login
-- [ ] Register
-- [ ] Email Confirmation
+- [x] Login
+- [x] Logout
+- [x] Register
+- [x] Email Confirmation
 - [ ] Forget Password
-- [ ] Home
+- [x] Home
 - [ ] Report Daily & Monthly
 - [ ] Profile

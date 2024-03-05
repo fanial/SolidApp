@@ -8,7 +8,11 @@
         android:id="@+id/emailConfirmFragment"
         android:name="com.solidecoteknologi.view.EmailConfirmFragment"
         android:label="fragment_email_confirm"
-        tools:layout="@layout/fragment_email_confirm" />
+        tools:layout="@layout/fragment_email_confirm" >
+        <action
+            android:id="@+id/action_emailConfirmFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.solidecoteknologi.view.LoginFragment"
@@ -44,6 +48,9 @@
         <action
             android:id="@+id/action_registerFragment_to_emailConfirmFragment"
             app:destination="@id/emailConfirmFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -61,7 +68,11 @@
         android:id="@+id/lupaPasswordFragment"
         android:name="com.solidecoteknologi.view.LupaPasswordFragment"
         android:label="fragment_lupa_password"
-        tools:layout="@layout/fragment_lupa_password" />
+        tools:layout="@layout/fragment_lupa_password" >
+        <action
+            android:id="@+id/action_lupaPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.solidecoteknologi.view.ProfileFragment"
@@ -73,6 +84,9 @@
         <action
             android:id="@+id/action_profileFragment_to_reportFragment"
             app:destination="@id/reportFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_onboardingFragment"
+            app:destination="@id/onboardingFragment" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"

@@ -88,9 +88,9 @@
                     android:id="@+id/layout_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/label_subjudul"
                     app:endIconDrawable="@drawable/email_icon"
                     app:endIconMode="custom"
+                    android:enabled="false"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -106,9 +106,9 @@
                     android:id="@+id/layout_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/label_subjudul"
-                    app:endIconDrawable="@drawable/pin_icon"
+                    app:endIconDrawable="@drawable/person_24px"
                     app:endIconMode="custom"
+                    android:enabled="false"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -116,7 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="62dp"
                         android:background="@drawable/shape_disable_edit_text"
-                        android:text="Password" />
+                        android:text="Role" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,8 +124,8 @@
                     android:id="@+id/layout_instansi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/label_subjudul"
                     app:endIconMode="custom"
+                    android:enabled="false"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -133,11 +133,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="62dp"
                         android:background="@drawable/shape_disable_edit_text"
-                        android:text="Pilih Instansi" />
+                        android:text="Instansi" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:text="Keluar"
+                    android:backgroundTint="@color/md_theme_primary"
+                    android:background="@drawable/shape_corner"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/logout_icon"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="55dp"
+                    />
+
+            </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 

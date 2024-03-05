@@ -4,23 +4,20 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseLogin(
 
+	@field:SerializedName("data")
+	val data: DataLogin,
+
 	@field:SerializedName("token_type")
 	val tokenType: String,
 
 	@field:SerializedName("expires_in")
 	val expiresIn: Int,
 
-	@field:SerializedName("account")
-	val account: Account,
-
 	@field:SerializedName("token")
-	val token: String,
-
-	@field:SerializedName("error")
-	val error: String
+	val token: String
 )
 
-data class AccountLogin(
+data class DataLogin(
 
 	@field:SerializedName("role")
 	val role: String,
@@ -32,7 +29,7 @@ data class AccountLogin(
 	val organizationId: String,
 
 	@field:SerializedName("organization")
-	val organization: OrganizationLogin,
+	val organization: Organization,
 
 	@field:SerializedName("name")
 	val name: String,
@@ -53,7 +50,7 @@ data class AccountLogin(
 data class OrganizationLogin(
 
 	@field:SerializedName("address")
-	val address: Any,
+	val address: String,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,

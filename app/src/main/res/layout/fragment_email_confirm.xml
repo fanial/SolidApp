@@ -46,7 +46,7 @@
             android:textSize="16sp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_buka_email"
+            android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="61dp"
             android:layout_gravity="center_horizontal"
@@ -55,15 +55,7 @@
             android:background="@drawable/shape_corner"
             android:paddingStart="50dp"
             android:paddingEnd="50dp"
-            android:text="Buka Email" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/notomedium"
-            android:gravity="center_horizontal"
-            android:text="Lewati Semua Konfirmasi"
-            android:textSize="15sp" />
+            android:text="Login" />
     </LinearLayout>
 
 </RelativeLayout>

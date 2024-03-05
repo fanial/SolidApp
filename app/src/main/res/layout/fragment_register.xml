@@ -54,6 +54,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_nama"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/label_subjudul"
@@ -76,6 +77,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_email"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/email_icon"
@@ -89,6 +91,7 @@
                     android:id="@+id/ed_email"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
+                    android:inputType="textEmailAddress"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Alamat Email" />
 
@@ -96,6 +99,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_password"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/pin_icon"
@@ -103,12 +107,15 @@
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
                 style="?attr/textInputFilledStyle"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_password"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Password" />
 
@@ -116,6 +123,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_password_validation"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:endIconDrawable="@drawable/pin_icon"
@@ -123,12 +131,15 @@
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
                 style="?attr/textInputFilledStyle"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_password_validation"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Confirmation Password" />
 
@@ -136,42 +147,47 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_instansi"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/label_subjudul"
-                app:endIconDrawable="@drawable/expand_circle_down"
-                app:endIconMode="custom"
                 app:boxStrokeWidth="0dp"
+                app:errorEnabled="true"
                 app:boxStrokeWidthFocused="0dp"
-                style="?attr/textInputFilledStyle"
-                app:errorEnabled="true">
+                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/ed_instansi"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
+                    android:inputType="none"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Pilih Instansi" />
+                    android:hint="Pilih Instansi"
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_role"
+                android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:endIconDrawable="@drawable/expand_circle_down"
-                app:endIconMode="custom"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
                 style="?attr/textInputFilledStyle"
-                app:errorEnabled="true">
+                app:errorEnabled="true"
+                app:endIconDrawable="@drawable/person_24px"
+                app:endIconMode="custom"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_role"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Pilih Role" />
+                    android:hint="Role"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,15 +217,25 @@
                     android:background="@drawable/shape_corner"
                     android:paddingStart="65dp"
                     android:paddingEnd="65dp"
+                    android:maxLines="1"
                     android:text="Daftar" />
 
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-
-
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_bar"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        app:lottie_rawRes="@raw/loading_linear"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        />
 
 
 </RelativeLayout>

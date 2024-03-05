@@ -6,11 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.solidecoteknologi.data.RequestRegister
 import com.solidecoteknologi.data.RequestStoreWaste
 import com.solidecoteknologi.data.ResponseCategory
-import com.solidecoteknologi.data.ResponseRegister
 import com.solidecoteknologi.data.ResponseStoreWaste
 import com.solidecoteknologi.network.Service
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -106,6 +103,7 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
             Log.e(ContentValues.TAG, "$errorMessage")
         }
     }
+
 
 
     //Handle Failure

@@ -4,11 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseOrganization(
 
-	@field:SerializedName("ResponseOrganization")
-	val responseOrganization: List<ResponseOrganizationItem>
+	@field:SerializedName("data")
+	val data: List<DataItem>,
+
+	@field:SerializedName("success")
+	val success: Boolean,
+
+	@field:SerializedName("message")
+	val message: String
 )
 
-data class ResponseOrganizationItem(
+data class DataItem(
 
 	@field:SerializedName("address")
 	val address: Any,

@@ -4,6 +4,18 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseProfile(
 
+	@field:SerializedName("data")
+	val data: DataProfile,
+
+	@field:SerializedName("success")
+	val success: Boolean,
+
+	@field:SerializedName("message")
+	val message: String
+)
+
+data class DataProfile(
+
 	@field:SerializedName("role")
 	val role: String,
 
@@ -14,7 +26,7 @@ data class ResponseProfile(
 	val organizationId: String,
 
 	@field:SerializedName("organization")
-	val organization: OrganizationProfile,
+	val organization: Organization,
 
 	@field:SerializedName("name")
 	val name: String,
@@ -32,10 +44,10 @@ data class ResponseProfile(
 	val email: String
 )
 
-data class OrganizationProfile(
+data class Organization(
 
 	@field:SerializedName("address")
-	val address: Any,
+	val address: String,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,

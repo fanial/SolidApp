@@ -1,13 +1,15 @@
 package com.solidecoteknologi.view
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +34,7 @@ class HomeFragment : Fragment() {
     private var doubleBackToExitPressedOnce = false
     private val adapter by lazy { CategoryAdapter() }
     private var isCategoryClicked = false
+    private  var idCategory = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +59,7 @@ class HomeFragment : Fragment() {
             }
 
             doubleBackToExitPressedOnce = true
-            Toast.makeText(requireContext(),"Tekan 2x untuk keluar dari aplikasi", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),getString(R.string.tekan_lagi_untuk_keluar), Toast.LENGTH_SHORT).show()
 
             Handler().postDelayed({
                 doubleBackToExitPressedOnce = false
@@ -70,11 +73,16 @@ class HomeFragment : Fragment() {
         val layout = LinearLayoutManager(context)
         binding.listCategory.layoutManager = layout
 
+        adapter.onClick = {
+            idCategory = it.id.toString()
+            binding.edKategori.text = it.name
+            toggleCardVisibility()
+            Log.i(TAG, "ID Category: $idCategory ${it.name}")
+        }
     }
 
     private fun setupModel() {
         modelTransaction.listCategory()
-
     }
 
     private fun setupListener() {
@@ -87,14 +95,25 @@ class HomeFragment : Fragment() {
 
         binding.btnKirim.setOnClickListener {
             val qty = binding.edQty.text.toString()
-
+            if (qty.isNotEmpty() && idCategory.isNotEmpty()){
+                modelTransaction.storeWaste(token, idAccount.toInt(), qty.toInt(), idCategory.toInt())
+            }
         }
 
         binding.edKategori.setOnClickListener {
-
+            toggleCardVisibility()
         }
 
 
+    }
+
+    private fun toggleCardVisibility() {
+        if (isCategoryClicked) {
+            binding.cardCategory.visibility = View.GONE
+        } else {
+            binding.cardCategory.visibility = View.VISIBLE
+        }
+        isCategoryClicked = !isCategoryClicked
     }
 
     private fun setupObservers() {
@@ -115,6 +134,21 @@ class HomeFragment : Fragment() {
         modelTransaction.dataCategory().observe(viewLifecycleOwner){ listCat ->
             if (listCat != null){
                 adapter.setData(listCat.data.toMutableList())
+            }
+        }
+
+        modelTransaction.dataWaste().observe(viewLifecycleOwner){
+            if (it != null) {
+                Snackbar.make(binding.root, it.message , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        modelTransaction.isLoading().observe(viewLifecycleOwner){
+            if (it == true){
+                binding.loadingBar.visibility = View.VISIBLE
+            } else {
+                binding.loadingBar.visibility = View.INVISIBLE
             }
         }
     }

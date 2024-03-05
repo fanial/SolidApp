@@ -42,7 +42,6 @@ interface Service {
 
     @GET("organization")
     suspend fun organization(
-        @Header("Authorization") token : String
     ) : Response<ResponseOrganization>
 
 //    Transaction End Point

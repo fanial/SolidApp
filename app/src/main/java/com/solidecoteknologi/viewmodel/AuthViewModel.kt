@@ -10,7 +10,10 @@ import androidx.lifecycle.viewModelScope
 import com.solidecoteknologi.data.RequestLogin
 import com.solidecoteknologi.data.RequestRegister
 import com.solidecoteknologi.data.ResponseLogin
+import com.solidecoteknologi.data.ResponseOrganization
+import com.solidecoteknologi.data.ResponseProfile
 import com.solidecoteknologi.data.ResponseRegister
+import com.solidecoteknologi.data.ResponseResult
 import com.solidecoteknologi.network.DataStoreManager
 import com.solidecoteknologi.network.Service
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -110,7 +113,12 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         val body = response.body()
         if (response.isSuccessful){
             if (body != null){
-                dataRegister.postValue(body)
+                if (body.success){
+                    dataRegister.postValue(body)
+                } else {
+                    val msg = body.message
+                    errorMessage.value = "Error: $msg"
+                }
                 Log.i(ContentValues.TAG, "onResponse: Success Load Response")
             } else {
                 dataRegister.postValue(null)
@@ -119,13 +127,119 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         } else {
             // Handle error response
             val errorCode = response.code()
-            val msg = response.message()
+            val msg = "Opsss! Something Wrong"
+            errorMessage.value = "Error $errorCode : $msg"
+            Log.e(ContentValues.TAG, "$errorMessage")
+        }
+    }
+
+    //Organization
+    private val dataOrganization : MutableLiveData<ResponseOrganization?> = MutableLiveData()
+    fun dataOrganization() : MutableLiveData<ResponseOrganization?> {
+        return dataOrganization
+    }
+    fun listOrganization() {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.organization()
+                handleListOrganizationResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
+    private fun handleListOrganizationResponse(response: Response<ResponseOrganization>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                dataOrganization.postValue(body)
+                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+            } else {
+                dataOrganization.postValue(null)
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            // Handle error response
+            val errorCode = response.code()
+            val msg = "Opsss! Something Wrong"
             errorMessage.value = "Error $errorCode: $msg"
             Log.e(ContentValues.TAG, "$errorMessage")
         }
     }
 
+    //Logout
+    private val logout = MutableLiveData<Boolean>()
+    fun isLogout(): LiveData<Boolean> = logout
+    fun logout(token: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.logout(token)
+                handleLogoutResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
 
+    private fun handleLogoutResponse(response: Response<ResponseResult>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                logout.value = true
+                message.value = body.message
+                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+            } else {
+                logout.value = false
+                message.value = null
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            // Handle error response
+            val errorCode = response.code()
+            val msg = "Opsss! Something Wrong"
+            errorMessage.value = "Error $errorCode: $msg"
+            Log.e(ContentValues.TAG, "$errorMessage")
+        }
+    }
+
+    //Profile
+    private val profile = MutableLiveData<ResponseProfile?>()
+    fun profile(): LiveData<ResponseProfile?> = profile
+    fun getProfile(token: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.profile(token)
+                handleProfileResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
+
+    private fun handleProfileResponse(response: Response<ResponseProfile>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                profile.value = body
+                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+            } else {
+                profile.value = null
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            // Handle error response
+            val errorCode = response.code()
+            val msg = "Opsss! Something Wrong"
+            errorMessage.value = "Error $errorCode: $msg"
+            Log.e(ContentValues.TAG, "$errorMessage")
+        }
+    }
 
     //Handle Failure
     private fun handleFailure(t: Throwable) {

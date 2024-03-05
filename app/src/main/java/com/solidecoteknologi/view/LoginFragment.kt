@@ -1,9 +1,12 @@
 package com.solidecoteknologi.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -47,6 +50,56 @@ class LoginFragment : Fragment() {
 
         setupListener()
         setupObservers()
+        setupViews()
+        setupBackHandler()
+    }
+
+    private fun setupViews() {
+        binding.edEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null) {
+                    with(binding){
+                        layoutNama.error = null
+                    }
+                } else{
+                    binding.layoutNama.error = getString(R.string.harap_isi_terlebih_dahulu)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0?.length == 0) {
+                    binding.layoutNama.error = getString(R.string.harap_isi_terlebih_dahulu)
+                }
+            }
+
+        })
+
+        binding.edPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null) {
+                    with(binding){
+                        layoutPassword.error = null
+                    }
+                } else{
+                    binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0?.length == 0) {
+                    binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
+                }
+            }
+
+        })
     }
 
     private fun setupObservers() {
@@ -60,7 +113,8 @@ class LoginFragment : Fragment() {
 
         model.dataLogin().observe(viewLifecycleOwner){
             if (it != null){
-                model.setToken("${it.tokenType} ${it.token}", it.account.id.toString(), true)
+                val data = it.data
+                model.setToken("${it.tokenType} ${it.token}", data.id.toString(), true)
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
         }
@@ -72,7 +126,12 @@ class LoginFragment : Fragment() {
                 val email = edEmail.text.toString()
                 val pass = edPassword.text.toString()
                 if (email.isNotEmpty() && pass.isNotEmpty()){
+                    binding.layoutNama.error = null
+                    binding.layoutPassword.error = null
                     model.login(email, pass)
+                } else {
+                    binding.layoutNama.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
                 }
             }
         }
@@ -84,6 +143,22 @@ class LoginFragment : Fragment() {
         binding.btnDaftar.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
+    }
+
+    private fun setupBackHandler() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentDestinationId = findNavController().currentDestination?.id
+
+                if (currentDestinationId == R.id.loginFragment) {
+                    findNavController().navigate(R.id.onboardingFragment)
+                } else {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }

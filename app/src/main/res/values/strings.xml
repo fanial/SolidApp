@@ -45,4 +45,7 @@
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="harap_isi_terlebih_dahulu">Harap isi terlebih dahulu</string>
+    <string name="tekan_lagi_untuk_keluar">Tekan 2x untuk keluar aplikasi</string>
+    <string name="pin_harus_6_karakter">Password setidaknya harus 6 karakter</string>
 </resources>

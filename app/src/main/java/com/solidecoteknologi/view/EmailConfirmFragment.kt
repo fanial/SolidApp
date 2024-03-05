@@ -1,29 +1,23 @@
 package com.solidecoteknologi.view
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.viewModels
-import com.google.android.material.snackbar.Snackbar
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.solidecoteknologi.R
 import com.solidecoteknologi.databinding.FragmentEmailConfirmBinding
-import com.solidecoteknologi.databinding.FragmentLoginBinding
-import com.solidecoteknologi.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class EmailConfirmFragment : Fragment() {
 
     private var _binding : FragmentEmailConfirmBinding? = null
     private val binding get() = _binding!!
-
-    private val model : AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,33 +41,28 @@ class EmailConfirmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListener()
-        setupObservers()
-    }
-
-    private fun setupObservers() {
-        model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
-            if (msg != null) {
-                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
-                    .show()
-            }
-        }
+        setupBackHandler()
     }
 
     private fun setupListener() {
-        binding.btnBukaEmail.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:")
-            }
-
-            if (intent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivity(intent)
-            } else {
-                Toast.makeText(context, "Email app not available", Toast.LENGTH_SHORT).show()
-            }
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_emailConfirmFragment_to_loginFragment)
         }
     }
+    private fun setupBackHandler() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentDestinationId = findNavController().currentDestination?.id
 
-    companion object {
+                if (currentDestinationId == R.id.emailConfirmFragment) {
+                    findNavController().navigate(R.id.loginFragment)
+                } else {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
+
 }
