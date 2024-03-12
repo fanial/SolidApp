@@ -84,9 +84,10 @@ class LoginFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null) {
+                if (p0 != null && p0.length >= 6) {
                     with(binding){
                         layoutPassword.error = null
+                        binding.btnMasuk.isEnabled = true
                     }
                 } else{
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
@@ -94,8 +95,9 @@ class LoginFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (p0?.length == 0) {
+                if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.btnMasuk.isEnabled = false
                 }
             }
 

@@ -54,17 +54,16 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_nama"
-                android:layout_marginBottom="10dp"
+                style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/label_subjudul"
-                app:endIconDrawable="@drawable/pencil_icon"
-                app:endIconMode="custom"
+                android:layout_marginBottom="10dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                style="?attr/textInputFilledStyle"
-                app:errorEnabled="true"
-                >
+                app:endIconDrawable="@drawable/pencil_icon"
+                app:endIconMode="custom"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_nama"
@@ -77,36 +76,36 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_email"
-                android:layout_marginBottom="10dp"
+                style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:endIconDrawable="@drawable/email_icon"
-                app:endIconMode="custom"
+                android:layout_marginBottom="10dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                style="?attr/textInputFilledStyle"
+                app:endIconDrawable="@drawable/email_icon"
+                app:endIconMode="custom"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_email"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:inputType="textEmailAddress"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Alamat Email" />
+                    android:hint="Alamat Email"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_password"
-                android:layout_marginBottom="10dp"
+                style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:endIconDrawable="@drawable/pin_icon"
-                app:endIconMode="custom"
+                android:layout_marginBottom="10dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                style="?attr/textInputFilledStyle"
+                app:endIconDrawable="@drawable/pin_icon"
+                app:endIconMode="custom"
                 app:errorEnabled="true"
                 app:passwordToggleEnabled="true">
 
@@ -114,23 +113,23 @@
                     android:id="@+id/ed_password"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Password" />
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_password_validation"
-                android:layout_marginBottom="10dp"
+                style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:endIconDrawable="@drawable/pin_icon"
-                app:endIconMode="custom"
+                android:layout_marginBottom="10dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                style="?attr/textInputFilledStyle"
+                app:endIconDrawable="@drawable/pin_icon"
+                app:endIconMode="custom"
                 app:errorEnabled="true"
                 app:passwordToggleEnabled="true">
 
@@ -138,56 +137,50 @@
                     android:id="@+id/ed_password_validation"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Confirmation Password" />
+                    android:hint="Confirmation Password"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_instansi"
-                android:layout_marginBottom="10dp"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 app:boxStrokeWidth="0dp"
-                app:errorEnabled="true"
                 app:boxStrokeWidthFocused="0dp"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu">
+                app:errorEnabled="true">
 
                 <AutoCompleteTextView
                     android:id="@+id/ed_instansi"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:inputType="none"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Pilih Instansi"
-                     />
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_role"
-                android:layout_marginBottom="20dp"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                style="?attr/textInputFilledStyle"
-                app:errorEnabled="true"
-                app:endIconDrawable="@drawable/person_24px"
-                app:endIconMode="custom"
-                >
+                app:errorEnabled="true">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/ed_role"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Role"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    />
+                    android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -215,9 +208,9 @@
                     android:layout_height="61dp"
                     android:layout_marginStart="17dp"
                     android:background="@drawable/shape_corner"
+                    android:maxLines="1"
                     android:paddingStart="65dp"
                     android:paddingEnd="65dp"
-                    android:maxLines="1"
                     android:text="Daftar" />
 
             </LinearLayout>

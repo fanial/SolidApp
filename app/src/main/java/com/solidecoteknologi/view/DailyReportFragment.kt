@@ -1,60 +1,138 @@
 package com.solidecoteknologi.view
 
+import android.R
+import android.R.attr
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.solidecoteknologi.R
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.android.material.snackbar.Snackbar
+import com.solidecoteknologi.data.DataDailyItem
+import com.solidecoteknologi.databinding.FragmentDailyReportBinding
+import com.solidecoteknologi.viewmodel.AuthViewModel
+import com.solidecoteknologi.viewmodel.TransactionViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DailyReportFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class DailyReportFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var _binding : FragmentDailyReportBinding? = null
+    private val binding get() = _binding!!
+
+    private val modelTransaction : TransactionViewModel by viewModels()
+    private val model : AuthViewModel by viewModels()
+    private var token = ""
+    private var date = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daily_report, container, false)
+    ): View {
+        _binding = FragmentDailyReportBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DailyReportFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DailyReportFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupObservers()
+        setupListener()
+        setupViews()
+
     }
+
+    private fun setupViews() {
+        val currentDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        date = currentDateTime.format(formatter)
+    }
+
+    private fun setupListener() {
+
+    }
+
+    private fun setupObservers() {
+        model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        model.getStoredAccount().observe(viewLifecycleOwner){ data ->
+            if (data != null) {
+                token = data.token
+                modelTransaction.dailyReport(token, date)
+            }
+        }
+
+        modelTransaction.dataDaily().observe(viewLifecycleOwner){
+            if (it != null){
+                updatePieChart(binding.pieChart, it.data)
+            }
+        }
+    }
+
+    private fun updatePieChart(pieChart: PieChart, data: List<DataDailyItem>) {
+        // Prepare data entries for the PieChart
+        val entries = ArrayList<PieEntry>()
+
+        data.map {
+            entries.add(
+                PieEntry(
+                    it.amount,
+                    it.category,
+                    data.size
+                ))
+        }
+
+        // Create a dataset for the PieChart
+        val dataSet = PieDataSet(entries, "Kategori Sampah")
+
+        dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
+
+        // Create PieData object
+        val pieData = PieData(dataSet)
+        pieData.setValueFormatter(PercentFormatter())
+
+        // Set data to the PieChart
+        pieChart.data = pieData
+
+        // Customize PieChart
+        pieChart.apply {
+            description.isEnabled = false
+            setEntryLabelColor(android.R.color.black)
+            setUsePercentValues(true)
+            setHoleColor(R.color.transparent)
+            setTransparentCircleColor(R.color.transparent)
+            setTransparentCircleAlpha(0)
+            holeRadius = 0f
+            transparentCircleRadius = 0f
+            setDrawEntryLabels(false)
+            legend.isEnabled = true
+        }
+
+        pieChart.highlightValues(null)
+        // Refresh the chart
+        pieChart.invalidate()
+    }
+
 }

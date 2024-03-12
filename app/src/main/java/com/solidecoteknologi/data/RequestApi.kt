@@ -47,3 +47,19 @@ data class RequestStoreWaste(
     val category: Int
 
 ) : Parcelable
+
+@Parcelize
+data class RequestMonthly(
+    @field:SerializedName("start_date")
+    val startDate: String,
+
+    @field:SerializedName("end_date")
+    val endDate: String
+
+) : Parcelable
+
+@Parcelize
+data class RequestDaily(
+    @field:SerializedName("date")
+    val date: String,
+) : Parcelable

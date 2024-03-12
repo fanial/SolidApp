@@ -3,6 +3,7 @@ package com.solidecoteknologi.view
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,8 @@ class RegisterFragment : Fragment() {
     private val modelTransaction : AuthViewModel by viewModels()
     private var instansi = ""
     private  var listInstansi = listOf<DataItem>()
+    private  var role = ""
+    private val item = listOf("User", "PIC")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +81,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupViews() {
+        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown, item)
+        binding.edRole.setAdapter(adapter)
+
         binding.edNama.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -130,9 +136,10 @@ class RegisterFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null) {
+                if (p0 != null && p0.length >= 6) {
                     with(binding){
                         layoutPassword.error = null
+                        binding.btnDaftar.isEnabled = false
                     }
                 } else{
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
@@ -140,8 +147,9 @@ class RegisterFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (p0?.length == 0) {
+                if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.btnDaftar.isEnabled = false
                 }
             }
 
@@ -153,7 +161,7 @@ class RegisterFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null) {
+                if (p0 != null && p0.length <= 6) {
                     with(binding){
                         layoutPasswordValidation.error = null
                     }
@@ -163,7 +171,7 @@ class RegisterFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (p0?.length == 0) {
+                if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPasswordValidation.error = getString(R.string.harap_isi_terlebih_dahulu)
                 }
             }
@@ -225,6 +233,12 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupListener() {
+
+        binding.edRole.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                role = item[position]
+                Log.i("TAG", "ROLE: $role")
+            }
 
         binding.btnKembali.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -44,6 +45,7 @@ class ProfileFragment : Fragment() {
         setupObservers()
         setupListener()
         setupViews()
+        setupBackButtonHandler()
     }
 
     private fun setupViews() {
@@ -90,6 +92,23 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
             }
         }
+    }
+
+    private fun setupBackButtonHandler() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val currentDestinationId = findNavController().currentDestination?.id
+
+                if (currentDestinationId == R.id.profileFragment) {
+                    findNavController().navigate(R.id.homeFragment)
+                } else {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
     }
 
 }

@@ -29,6 +29,12 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
         }
     }
 
+    suspend fun saveNewToken(isToken : String) {
+        setDataStore.edit { preferences ->
+            preferences[TOKEN] = isToken
+        }
+    }
+
     fun getStoredValues(): Flow<DataAccountValues> = setDataStore.data.map { pref ->
         DataAccountValues(
             token = pref[TOKEN] ?: "",

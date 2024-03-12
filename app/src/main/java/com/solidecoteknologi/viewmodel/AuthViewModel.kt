@@ -12,12 +12,14 @@ import com.solidecoteknologi.data.RequestRegister
 import com.solidecoteknologi.data.ResponseLogin
 import com.solidecoteknologi.data.ResponseOrganization
 import com.solidecoteknologi.data.ResponseProfile
+import com.solidecoteknologi.data.ResponseRefreshToken
 import com.solidecoteknologi.data.ResponseRegister
 import com.solidecoteknologi.data.ResponseResult
 import com.solidecoteknologi.network.DataStoreManager
 import com.solidecoteknologi.network.Service
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import javax.inject.Inject
@@ -29,6 +31,11 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
     fun setToken(token: String, idAcc: String, status: Boolean){
         viewModelScope.launch {
             store.saveDataStore(token, idAcc, status)
+        }
+    }
+    fun setNewToken(token: String){
+        viewModelScope.launch {
+            store.saveNewToken(token)
         }
     }
 
@@ -83,12 +90,18 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            // Handle error response
-            dataLogin.postValue(null)
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("error")
+            val msg500 = errorObj?.getString("error")
             val errorCode = response.code()
-            val msg = "Opsss! Something Wrong"
-            errorMessage.value = "$errorCode: $msg"
             Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
         }
     }
 
@@ -125,11 +138,18 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            // Handle error response
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("message")
+            val msg500 = errorObj?.getString("error")
             val errorCode = response.code()
-            val msg = "Opsss! Something Wrong"
-            errorMessage.value = "Error $errorCode : $msg"
             Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
         }
     }
 
@@ -161,11 +181,18 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            // Handle error response
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("message")
+            val msg500 = errorObj?.getString("error")
             val errorCode = response.code()
-            val msg = "Opsss! Something Wrong"
-            errorMessage.value = "Error $errorCode: $msg"
             Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
         }
     }
 
@@ -198,11 +225,18 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            // Handle error response
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("message")
+            val msg500 = errorObj?.getString("error")
             val errorCode = response.code()
-            val msg = "Opsss! Something Wrong"
-            errorMessage.value = "Error $errorCode: $msg"
             Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
         }
     }
 
@@ -233,13 +267,66 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            // Handle error response
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("message")
+            val msg500 = errorObj?.getString("error")
             val errorCode = response.code()
-            val msg = "Opsss! Something Wrong"
-            errorMessage.value = "Error $errorCode: $msg"
             Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
         }
     }
+
+    //Resfresh Token
+    private val refreshToken = MutableLiveData<ResponseRefreshToken?>()
+    fun refreshToken(): LiveData<ResponseRefreshToken?> = refreshToken
+    fun refreshToken(token: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.refreshToken(token)
+                handleRefreshTokenResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
+
+    private fun handleRefreshTokenResponse(response: Response<ResponseRefreshToken>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                refreshToken.value = body
+                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+            } else {
+                refreshToken.value = null
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("message")
+            val msg500 = errorObj?.getString("error")
+            val errorCode = response.code()
+            Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
+        }
+    }
+
+
+    // handle Response Failed
+
 
     //Handle Failure
     private fun handleFailure(t: Throwable) {

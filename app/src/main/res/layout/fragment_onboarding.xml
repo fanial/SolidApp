@@ -9,18 +9,17 @@
     <ImageView
         android:id="@+id/img_corner_top_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/img_logo_app"
+        android:layout_height="216dp"
         android:layout_alignParentTop="true"
-        android:src="@drawable/corner_top_1"
-        android:layout_marginBottom="70dp"/>
+        android:src="@drawable/corner_top_1" />
 
     <ImageView
         android:id="@+id/img_logo_app"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
+        android:padding="30dp"
         android:layout_above="@id/label_judul"
-        android:src="@drawable/logo1"
+        android:src="@drawable/logo_solid"
         />
 
     <TextView
@@ -30,7 +29,6 @@
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
         android:text="Solusi Limbah Indonesia"
-        android:layout_marginTop="20dp"
         android:textSize="24sp"
         android:fontFamily="@font/notobold"
         android:textColor="?attr/colorPrimary"/>

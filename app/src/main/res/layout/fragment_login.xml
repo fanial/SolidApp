@@ -31,8 +31,9 @@
                 <ImageView
                     android:id="@+id/img_logo_app"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/logo1"
+                    android:layout_height="150dp"
+                    android:padding="10dp"
+                    android:src="@drawable/logo_solid"
                     android:layout_marginTop="80dp"/>
 
                 <TextView
@@ -43,7 +44,7 @@
                     android:text="Selamat Datang!"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="24sp"
-                    android:layout_marginTop="50dp"/>
+                    android:layout_marginTop="30dp"/>
 
                 <TextView
                     android:id="@+id/label_subjudul"

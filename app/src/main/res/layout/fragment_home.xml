@@ -72,33 +72,24 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/ed_kategori"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_kategori"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pilih Kategori"
-                android:textSize="16sp"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20sp"
-                android:textColor="@color/md_theme_primary"
-                android:background="@drawable/shape_edit_text"
-                app:drawableEndCompat="@drawable/expand_circle_down" />
+                android:layout_marginBottom="10dp"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_category"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:background="@color/md_theme_primary"
-                    android:id="@+id/list_category"
+                <AutoCompleteTextView
+                    android:id="@+id/ed_kategori"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    tools:listitem="@layout/layout_dropdown" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:layout_height="62dp"
+                    android:background="@drawable/shape_edit_text"
+                    android:hint="Pilih Kategori"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/loading_bar"

@@ -27,7 +27,11 @@
                 android:fontFamily="@font/notomedium"
                 android:layout_marginBottom="10dp"/>
 
-
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pie_chart"
+                android:layout_below="@id/waktu_report"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -2,10 +2,13 @@ package com.solidecoteknologi.data
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseLogin(
+data class ResponseRefreshToken(
+
+	@field:SerializedName("status")
+	val status: String,
 
 	@field:SerializedName("data")
-	val data: DataLogin,
+	val data: DataRefreshTokenItem,
 
 	@field:SerializedName("token_type")
 	val tokenType: String,
@@ -14,13 +17,10 @@ data class ResponseLogin(
 	val expiresIn: Int,
 
 	@field:SerializedName("token")
-	val token: String,
-
-	@field:SerializedName("error")
-	val error: String
+	val token: String
 )
 
-data class DataLogin(
+data class DataRefreshTokenItem(
 
 	@field:SerializedName("role")
 	val role: String,
@@ -48,22 +48,4 @@ data class DataLogin(
 
 	@field:SerializedName("email")
 	val email: String
-)
-
-data class OrganizationLogin(
-
-	@field:SerializedName("address")
-	val address: String,
-
-	@field:SerializedName("updated_at")
-	val updatedAt: String,
-
-	@field:SerializedName("name")
-	val name: String,
-
-	@field:SerializedName("created_at")
-	val createdAt: String,
-
-	@field:SerializedName("id")
-	val id: Int
 )
