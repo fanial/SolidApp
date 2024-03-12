@@ -24,13 +24,6 @@ class ProfileFragment : Fragment() {
     private val model : AuthViewModel by viewModels()
     private var token = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false)
-        exitTransition = MaterialFadeThrough()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

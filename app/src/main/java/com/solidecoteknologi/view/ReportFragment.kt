@@ -18,11 +18,6 @@ class ReportFragment : Fragment() {
     private var _binding : FragmentReportBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,14 +29,9 @@ class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObservers()
         setupListener()
-        setupModel()
-        setupViews()
-    }
 
-    private fun setupViews() {
-        val adapter = ReportPagerAdapter(requireActivity().supportFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        val adapter = ReportPagerAdapter(requireActivity().supportFragmentManager)
         adapter.addFragment(DailyReportFragment(), "Per Hari")
         adapter.addFragment(MonthlyReportFragment(), "Per Bulan")
 
@@ -49,7 +39,7 @@ class ReportFragment : Fragment() {
         binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
-    private fun setupModel() {
+    private fun setupViews() {
 
     }
 
@@ -63,8 +53,5 @@ class ReportFragment : Fragment() {
 
     }
 
-    private fun setupObservers() {
-
-    }
 
 }

@@ -37,7 +37,7 @@
     </com.google.android.material.card.MaterialCardView>
 
 
-    <TextView
+    <!--<TextView
         android:id="@+id/label_judul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                 android:layout_below="@id/label_type_b3"/>
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
-
+-->
 
 
 </RelativeLayout>

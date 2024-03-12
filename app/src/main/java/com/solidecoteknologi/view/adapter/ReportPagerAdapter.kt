@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class ReportPagerAdapter (fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
+class ReportPagerAdapter (fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     private val fragments: MutableList<Fragment> = ArrayList()
     private val fragmentTitles: MutableList<String> = ArrayList()

@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import com.solidecoteknologi.R
 import com.solidecoteknologi.data.DataCategoryItem
 import com.solidecoteknologi.databinding.FragmentHomeBinding
@@ -47,16 +49,11 @@ class HomeFragment : Fragment() {
         setupObservers()
         setupListener()
         setupModel()
-        setupViews()
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().finish()
             return@addCallback
         }
-
-    }
-
-    private fun setupViews() {
 
     }
 

@@ -2,6 +2,7 @@ package com.solidecoteknologi.view
 
 import android.R
 import android.R.attr
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,8 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import com.solidecoteknologi.data.DataDailyItem
 import com.solidecoteknologi.databinding.FragmentDailyReportBinding
 import com.solidecoteknologi.viewmodel.AuthViewModel
@@ -37,10 +40,6 @@ class DailyReportFragment : Fragment() {
     private var token = ""
     private var date = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +62,12 @@ class DailyReportFragment : Fragment() {
         val currentDateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         date = currentDateTime.format(formatter)
+        val day = currentDateTime.dayOfWeek
+        binding.waktuReport.text = buildString {
+            append(day)
+            append(", ")
+            append(date)
+        }
     }
 
     private fun setupListener() {
@@ -94,6 +99,7 @@ class DailyReportFragment : Fragment() {
     private fun updatePieChart(pieChart: PieChart, data: List<DataDailyItem>) {
         // Prepare data entries for the PieChart
         val entries = ArrayList<PieEntry>()
+        val colors = intArrayOf(Color.parseColor("#4DC243"), Color.parseColor("#FFB905"), Color.parseColor("#D92626"))
 
         data.map {
             entries.add(
@@ -107,7 +113,7 @@ class DailyReportFragment : Fragment() {
         // Create a dataset for the PieChart
         val dataSet = PieDataSet(entries, "Kategori Sampah")
 
-        dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
+        dataSet.colors = colors.toList()
 
         // Create PieData object
         val pieData = PieData(dataSet)
