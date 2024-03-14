@@ -17,7 +17,7 @@
         android:id="@+id/img_logo_app"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:padding="30dp"
+        android:padding="45dp"
         android:layout_above="@id/label_judul"
         android:src="@drawable/logo_solid"
         />

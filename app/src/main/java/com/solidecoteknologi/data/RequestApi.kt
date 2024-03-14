@@ -41,7 +41,7 @@ data class RequestStoreWaste(
     val account: Int,
 
     @field:SerializedName("weight")
-    val weight: Int,
+    val weight: Float,
 
     @field:SerializedName("category")
     val category: Int
@@ -62,4 +62,10 @@ data class RequestMonthly(
 data class RequestDaily(
     @field:SerializedName("date")
     val date: String,
+) : Parcelable
+
+@Parcelize
+data class RequestForgetPass(
+    @field:SerializedName("email")
+    val email: String,
 ) : Parcelable

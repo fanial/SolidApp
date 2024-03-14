@@ -7,5 +7,5 @@ data class ResponseResult(
     val message: String,
 
     @field:SerializedName("status")
-    val status: String,
+    val status: Boolean,
 )

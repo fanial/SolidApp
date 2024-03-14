@@ -102,16 +102,18 @@ class DailyReportFragment : Fragment() {
         val colors = intArrayOf(Color.parseColor("#4DC243"), Color.parseColor("#FFB905"), Color.parseColor("#D92626"))
 
         data.map {
-            entries.add(
-                PieEntry(
-                    it.amount,
-                    it.category,
-                    data.size
-                ))
+            if (it.amount.toInt() != 0){
+                entries.add(
+                    PieEntry(
+                        it.amount,
+                        it.category,
+                        data.size
+                    ))
+            }
         }
 
         // Create a dataset for the PieChart
-        val dataSet = PieDataSet(entries, "Kategori Sampah")
+        val dataSet = PieDataSet(entries,"")
 
         dataSet.colors = colors.toList()
 

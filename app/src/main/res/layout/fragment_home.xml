@@ -65,10 +65,10 @@
                     android:id="@+id/ed_qty"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Masukan Berat Sampah" />
+                    android:hint="Masukan Berat Sampah (kg)" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

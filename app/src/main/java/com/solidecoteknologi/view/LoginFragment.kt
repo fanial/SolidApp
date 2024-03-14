@@ -120,6 +120,14 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
         }
+
+        model.isLoading().observe(viewLifecycleOwner){
+            if (it == true){
+                binding.loadingBar.visibility = View.VISIBLE
+            } else {
+                binding.loadingBar.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun setupListener() {

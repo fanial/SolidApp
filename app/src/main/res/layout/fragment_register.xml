@@ -68,7 +68,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_nama"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Nama" />
 
@@ -89,7 +89,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_email"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Alamat Email"
                     android:inputType="textEmailAddress" />
@@ -112,7 +112,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_password"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Password"
                     android:inputType="textPassword"
@@ -136,7 +136,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_password_validation"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Confirmation Password"
                     android:inputType="textPassword"
@@ -157,10 +157,11 @@
                 <AutoCompleteTextView
                     android:id="@+id/ed_instansi"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Pilih Instansi"
-                    android:inputType="none" />
+                    android:inputType="text"
+                    android:textColor="@color/md_theme_primary"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -177,10 +178,11 @@
                 <AutoCompleteTextView
                     android:id="@+id/ed_role"
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Role"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textColor="@color/md_theme_primary"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -196,17 +198,15 @@
                     android:layout_height="61dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/shape_corner"
-                    android:paddingStart="60dp"
-                    android:paddingEnd="60dp"
                     android:text="Kembali"
                     android:textColor="@color/black"
                     app:backgroundTint="@color/md_theme_tertiary" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_daftar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="61dp"
-                    android:layout_marginStart="17dp"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/shape_corner"
                     android:maxLines="1"
                     android:paddingStart="65dp"

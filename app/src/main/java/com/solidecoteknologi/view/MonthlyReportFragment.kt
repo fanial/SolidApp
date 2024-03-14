@@ -72,7 +72,10 @@ class MonthlyReportFragment : Fragment() {
                 val categories = it.data
 
                 for ((index, data) in categories.withIndex()) {
-                    entries.add(BarEntry(index.toFloat(), data.amount.toFloat()))
+                    if (data.amount.toInt() != 0){
+                        entries.add(BarEntry(index.toFloat(), data.amount))
+                    }
+
                     when (data.category) {
                         "Anorganik" -> {
                             colors.add(Color.parseColor("#FFB905"))

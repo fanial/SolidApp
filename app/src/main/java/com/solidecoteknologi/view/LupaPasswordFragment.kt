@@ -53,23 +53,19 @@ class LupaPasswordFragment : Fragment() {
         }
 
         binding.btnSimpan.setOnClickListener {
-            val pass = binding.edPasswordBaru.text.toString()
-            val passValid = binding.edUlangiPassword.text.toString()
-            if (pass.isNotEmpty() && passValid.isNotEmpty()){
-                if (pass.length >= 6 && passValid.length >= 6){
-                    binding.edPasswordBaru.error = null
-                    binding.edUlangiPassword.error = null
-                    //model.register(name, email, pass, passValid, role, instansi)
-                }else{
-                    binding.layoutPassword.error = getString(R.string.pin_harus_6_karakter)
-                    binding.layoutPassBaru.error = getString(R.string.pin_harus_6_karakter)
-                }
+            val email = binding.edEmail.text.toString()
+            if (email.isNotEmpty() ){
+                model.forgetPassword(email)
             }
         }
     }
 
     private fun setupObservers() {
-        // TODO: Observe password baru
+        model.isForget().observe(viewLifecycleOwner){
+            if (it == true){
+                findNavController().navigate(R.id.action_lupaPasswordFragment_to_emailConfirmFragment)
+            }
+        }
     }
 
     private fun setupBackHandler() {

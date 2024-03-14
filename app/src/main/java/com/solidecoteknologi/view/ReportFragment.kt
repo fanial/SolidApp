@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayoutMediator
 import com.solidecoteknologi.R
 import com.solidecoteknologi.databinding.FragmentReportBinding
 import com.solidecoteknologi.view.adapter.ReportPagerAdapter
@@ -17,6 +18,8 @@ class ReportFragment : Fragment() {
 
     private var _binding : FragmentReportBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var viewPagerAdapter : ReportPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,17 +33,28 @@ class ReportFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupListener()
+        setupViews()
 
-        val adapter = ReportPagerAdapter(requireActivity().supportFragmentManager)
-        adapter.addFragment(DailyReportFragment(), "Per Hari")
-        adapter.addFragment(MonthlyReportFragment(), "Per Bulan")
-
-        binding.viewPager.adapter = adapter
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
     private fun setupViews() {
+        viewPagerAdapter = ReportPagerAdapter(requireActivity().supportFragmentManager, lifecycle)
+        with(binding){
+            viewPager.adapter = viewPagerAdapter
 
+            TabLayoutMediator(tabLayout, viewPager){ tab, position ->
+                when(position){
+                    0 -> {
+                        tab.text = "Per Hari"
+                        tab.setIcon(R.drawable.day_icon) // Set icon for the tab
+                    }
+                    1 -> {
+                        tab.text = "Per Bulan"
+                        tab.setIcon(R.drawable.month_icon)
+                    }
+                }
+            }.attach()
+        }
     }
 
     private fun setupListener() {

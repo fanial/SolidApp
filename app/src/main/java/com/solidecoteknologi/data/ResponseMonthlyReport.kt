@@ -17,7 +17,7 @@ data class ResponseMonthlyReport(
 data class DataMonthlyItem(
 
 	@field:SerializedName("amount")
-	val amount: Int,
+	val amount: Float,
 
 	@field:SerializedName("category")
 	val category: String

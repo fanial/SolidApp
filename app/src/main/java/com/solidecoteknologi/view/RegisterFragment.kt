@@ -102,6 +102,7 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0) {
                     binding.layoutNama.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.layoutNama.clearFocus()
                 }
             }
 
@@ -125,6 +126,7 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0) {
                     binding.layoutEmail.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.layoutEmail.clearFocus()
                 }
             }
 
@@ -150,6 +152,7 @@ class RegisterFragment : Fragment() {
                 if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
                     binding.btnDaftar.isEnabled = false
+                    binding.layoutPassword.clearFocus()
                 }
             }
 
@@ -173,6 +176,7 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPasswordValidation.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.layoutPasswordValidation.clearFocus()
                 }
             }
 
@@ -196,6 +200,31 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0) {
                     binding.layoutRole.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.layoutRole.clearFocus()
+                }
+            }
+
+        })
+
+        binding.edInstansi.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null) {
+                    with(binding){
+                        layoutInstansi.error = null
+                    }
+                } else{
+                    binding.layoutInstansi.error = getString(R.string.harap_isi_terlebih_dahulu)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0?.length == 0) {
+                    binding.layoutInstansi.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.layoutInstansi.clearFocus()
                 }
             }
 
@@ -213,7 +242,6 @@ class RegisterFragment : Fragment() {
                 Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
                     .show()
             }
-
         }
 
         model.dataRegister().observe(viewLifecycleOwner){
@@ -230,6 +258,11 @@ class RegisterFragment : Fragment() {
                 binding.edInstansi.setAdapter(adapter)
             }
         }
+
+        model.isLoading().observe(viewLifecycleOwner){
+            loading(it)
+        }
+
     }
 
     private fun setupListener() {
@@ -280,4 +313,16 @@ class RegisterFragment : Fragment() {
         }
 
     }
+
+    private fun loading(status: Boolean) {
+        when(status){
+            true -> {
+                binding.loadingBar.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.loadingBar.visibility = View.INVISIBLE
+            }
+        }
+    }
+
 }

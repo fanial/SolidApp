@@ -3,26 +3,21 @@ package com.solidecoteknologi.view.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.solidecoteknologi.view.DailyReportFragment
+import com.solidecoteknologi.view.MonthlyReportFragment
 
-class ReportPagerAdapter (fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class ReportPagerAdapter (fm: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fm, lifecycle) {
 
-    private val fragments: MutableList<Fragment> = ArrayList()
-    private val fragmentTitles: MutableList<String> = ArrayList()
+    override fun getItemCount(): Int = 2
 
-    fun addFragment(fragment: Fragment, title: String) {
-        fragments.add(fragment)
-        fragmentTitles.add(title)
-    }
-
-    override fun getItem(position: Int): Fragment {
-        return fragments[position]
-    }
-
-    override fun getCount(): Int {
-        return fragments.size
-    }
-
-    override fun getPageTitle(position: Int): CharSequence {
-        return fragmentTitles[position]
+    override fun createFragment(position: Int): Fragment {
+        var fragment = Fragment()
+        when(position){
+            0 -> fragment = DailyReportFragment()
+            1 -> fragment = MonthlyReportFragment()
+        }
+        return fragment
     }
 }

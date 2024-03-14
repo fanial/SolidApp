@@ -1,6 +1,7 @@
 package com.solidecoteknologi.network
 
 import com.solidecoteknologi.data.RequestDaily
+import com.solidecoteknologi.data.RequestForgetPass
 import com.solidecoteknologi.data.RequestLogin
 import com.solidecoteknologi.data.RequestMonthly
 import com.solidecoteknologi.data.RequestRegister
@@ -75,5 +76,10 @@ interface Service {
         @Header("Authorization") token : String,
         @Body dataStoreWaste : RequestStoreWaste
     ) : Response<ResponseStoreWaste>
+
+    @POST("forgot-password")
+    suspend fun forgetPass(
+        @Body emailForgetPass : RequestForgetPass
+    ) : Response<ResponseResult>
 }
 

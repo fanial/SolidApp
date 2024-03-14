@@ -42,7 +42,7 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
     fun dataWaste() : MutableLiveData<ResponseStoreWaste?> {
         return dataWaste
     }
-    fun storeWaste(token : String, idAcc: Int, weight : Int, category : Int) {
+    fun storeWaste(token : String, idAcc: Int, weight : Float, category : Int) {
         viewModelScope.launch {
             _loading.value = true
             try {

@@ -35,6 +35,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // TODO: update profile 
+        // TODO: button update pindah ke bawah 
         setupObservers()
         setupListener()
         setupViews()
@@ -70,6 +72,14 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        model.isLoading().observe(viewLifecycleOwner){
+            if (it == true){
+                binding.loadingBar.visibility = View.VISIBLE
+            } else {
+                binding.loadingBar.visibility = View.INVISIBLE
+            }
+        }
+
         model.profile().observe(viewLifecycleOwner){
             if (it != null){
                 val data = it.data
@@ -77,11 +87,17 @@ class ProfileFragment : Fragment() {
                 binding.edEmail.setText(data.email)
                 binding.edPassword.setText(data.role)
                 binding.edInstansi.setText(data.organization.name)
+
+                if (it.status == "Token is Expired" || it.status == "Token is Invalid"){
+                    model.logout()
+                    findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
+                }
             }
         }
 
         model.isLogout().observe(viewLifecycleOwner){
             if (it == true){
+                model.logout()
                 findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
             }
         }

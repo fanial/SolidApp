@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.solidecoteknologi.data.RequestForgetPass
 import com.solidecoteknologi.data.RequestLogin
 import com.solidecoteknologi.data.RequestRegister
 import com.solidecoteknologi.data.ResponseLogin
@@ -82,11 +83,13 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         _loading.value = false
         val body = response.body()
         if (response.isSuccessful){
-            if (body != null){
+            if (body != null && body.success){
                 dataLogin.postValue(body)
                 Log.i(ContentValues.TAG, "onResponse: Success Load Response")
             } else {
                 dataLogin.postValue(null)
+                val msg = body!!.message
+                errorMessage.value = msg
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
@@ -130,7 +133,7 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
                     dataRegister.postValue(body)
                 } else {
                     val msg = body.message
-                    errorMessage.value = "Error: $msg"
+                    errorMessage.value = msg
                 }
                 Log.i(ContentValues.TAG, "onResponse: Success Load Response")
             } else {
@@ -160,7 +163,6 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
     }
     fun listOrganization() {
         viewModelScope.launch {
-            _loading.value = true
             try {
                 val response = service.organization()
                 handleListOrganizationResponse(response)
@@ -170,11 +172,15 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         }
     }
     private fun handleListOrganizationResponse(response: Response<ResponseOrganization>) {
-        _loading.value = false
         val body = response.body()
         if (response.isSuccessful){
             if (body != null){
-                dataOrganization.postValue(body)
+                if (body.success){
+                    dataOrganization.postValue(body)
+                } else {
+                    val msg = body.message
+                    errorMessage.value = "Error: $msg"
+                }
                 Log.i(ContentValues.TAG, "onResponse: Success Load Response")
             } else {
                 dataOrganization.postValue(null)
@@ -324,6 +330,51 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         }
     }
 
+    //Forget Password
+    private val isForget = MutableLiveData<Boolean?>()
+    fun isForget(): LiveData<Boolean?> = isForget
+    fun forgetPassword(email: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.forgetPass(RequestForgetPass(email))
+                handleForgetPassResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
+
+    private fun handleForgetPassResponse(response: Response<ResponseResult>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                if (body.status){
+                    isForget.value = true
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    isForget.value = false
+                }
+            } else {
+                isForget.value = null
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("message")
+            val msg500 = errorObj?.getString("error")
+            val errorCode = response.code()
+            Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
+        }
+    }
 
     // handle Response Failed
 

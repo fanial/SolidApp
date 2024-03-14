@@ -1,6 +1,8 @@
 package com.solidecoteknologi.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +48,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // TODO: reset value
+        // TODO: message dialog if success
+
         setupObservers()
         setupListener()
         setupModel()
@@ -73,7 +78,7 @@ class HomeFragment : Fragment() {
             val qty = binding.edQty.text.toString()
             if (qty.isNotEmpty() && idCategory.isNotEmpty()){
                 lifecycleScope.launch {
-                    modelTransaction.storeWaste(token, idAccount.toInt(), qty.toInt(), idCategory.toInt())
+                    modelTransaction.storeWaste(token, idAccount.toInt(), qty.toFloat(), idCategory.toInt())
                 }
             }
         }
@@ -82,6 +87,8 @@ class HomeFragment : Fragment() {
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 idCategory = listCategory[position].id.toString()
             }
+
+
 
 
     }
@@ -108,6 +115,20 @@ class HomeFragment : Fragment() {
                 val item = listCategory.map { d -> d.name }
                 val adapter = ArrayAdapter(requireContext(), R.layout.dropdown, item)
                 binding.edKategori.setAdapter(adapter)
+
+                binding.edKategori.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        // Not needed
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        adapter.filter.filter(s)
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        // Not needed
+                    }
+                })
             }
         }
 
@@ -123,17 +144,6 @@ class HomeFragment : Fragment() {
                 binding.loadingBar.visibility = View.VISIBLE
             } else {
                 binding.loadingBar.visibility = View.INVISIBLE
-            }
-        }
-
-        model.refreshToken().observe(viewLifecycleOwner){
-            if (it != null){
-                if (it.status == "Token is Expired" || it.status == "Token is Invalid"){
-                    model.logout()
-                    findNavController().navigate(R.id.action_homeFragment_to_onboardingFragment)
-                } else {
-                    model.setNewToken("${it.tokenType} ${it.token}")
-                }
             }
         }
     }

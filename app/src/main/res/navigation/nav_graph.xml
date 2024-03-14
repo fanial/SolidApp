@@ -73,6 +73,9 @@
         android:label="fragment_lupa_password"
         tools:layout="@layout/fragment_lupa_password" >
         <action
+            android:id="@+id/action_lupaPasswordFragment_to_emailConfirmFragment"
+            app:destination="@id/emailConfirmFragment" />
+        <action
             android:id="@+id/action_lupaPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
