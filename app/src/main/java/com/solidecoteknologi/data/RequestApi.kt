@@ -69,3 +69,18 @@ data class RequestForgetPass(
     @field:SerializedName("email")
     val email: String,
 ) : Parcelable
+
+@Parcelize
+data class RequestUpdate(
+    @field:SerializedName("account_id")
+    val accountId: Int,
+
+    @field:SerializedName("name")
+    val name: String,
+
+    @field:SerializedName("password")
+    val password: String,
+
+    @field:SerializedName("organization")
+    val organization: String
+) : Parcelable

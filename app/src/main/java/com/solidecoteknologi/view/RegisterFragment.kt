@@ -1,5 +1,6 @@
 package com.solidecoteknologi.view
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
@@ -33,7 +35,7 @@ class RegisterFragment : Fragment() {
     private var instansi = ""
     private  var listInstansi = listOf<DataItem>()
     private  var role = ""
-    private val item = listOf("User", "PIC")
+    private val item = listOf("user", "pic")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,11 @@ class RegisterFragment : Fragment() {
 
     }
 
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.edInstansi.windowToken, 0)
+    }
+
     private fun setupBackHandler() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -81,6 +88,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupViews() {
+
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown, item)
         binding.edRole.setAdapter(adapter)
 
@@ -141,7 +149,6 @@ class RegisterFragment : Fragment() {
                 if (p0 != null && p0.length >= 6) {
                     with(binding){
                         layoutPassword.error = null
-                        binding.btnDaftar.isEnabled = false
                     }
                 } else{
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
@@ -151,7 +158,6 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
-                    binding.btnDaftar.isEnabled = false
                     binding.layoutPassword.clearFocus()
                 }
             }
@@ -225,6 +231,7 @@ class RegisterFragment : Fragment() {
                 if (p0?.length == 0) {
                     binding.layoutInstansi.error = getString(R.string.harap_isi_terlebih_dahulu)
                     binding.layoutInstansi.clearFocus()
+                    hideKeyboard()
                 }
             }
 
@@ -281,7 +288,11 @@ class RegisterFragment : Fragment() {
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 instansi = listInstansi[position].id.toString()
                 binding.layoutInstansi.error = null
+                hideKeyboard()
+                binding.layoutInstansi.clearFocus()
+                Log.i("TAG", "ROLE: $instansi")
             }
+
 
         binding.btnDaftar.setOnClickListener {
             binding.apply {
@@ -292,15 +303,7 @@ class RegisterFragment : Fragment() {
                 val instansi = instansi
                 val role = edRole.text.toString()
                 if (name.isNotEmpty() && email.isNotEmpty() && pass.isNotEmpty() && passValid.isNotEmpty() && role.isNotEmpty() && instansi.isNotEmpty()){
-                    if (pass.length >= 6 && passValid.length >= 6){
-                        binding.edPassword.error = null
-                        binding.edPasswordValidation.error = null
-                        model.register(name, email, pass, passValid, role, instansi)
-                    }else{
-                        binding.layoutPassword.error = getString(R.string.pin_harus_6_karakter)
-                        binding.layoutPasswordValidation.error = getString(R.string.pin_harus_6_karakter)
-                    }
-
+                    model.register(name, email, pass, passValid, role, instansi)
                 } else {
                     layoutNama.error = getString(R.string.harap_isi_terlebih_dahulu)
                     layoutEmail.error = getString(R.string.harap_isi_terlebih_dahulu)
@@ -311,6 +314,7 @@ class RegisterFragment : Fragment() {
                 }
             }
         }
+
 
     }
 

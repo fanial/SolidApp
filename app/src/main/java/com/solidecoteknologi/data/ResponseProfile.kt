@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseProfile(
 
-	@field:SerializedName("status")
-	val status: String,
-
 	@field:SerializedName("data")
 	val data: DataProfile,
 
@@ -42,6 +39,9 @@ data class DataProfile(
 
 	@field:SerializedName("id")
 	val id: Int,
+
+	@field:SerializedName("avatar")
+	val avatar: String,
 
 	@field:SerializedName("email")
 	val email: String

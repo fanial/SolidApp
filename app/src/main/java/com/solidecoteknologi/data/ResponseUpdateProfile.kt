@@ -2,10 +2,10 @@ package com.solidecoteknologi.data
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseStoreWaste(
+data class ResponseUpdateProfile(
 
 	@field:SerializedName("data")
-	val data: DataStoreWaste,
+	val data: Data,
 
 	@field:SerializedName("success")
 	val success: Boolean,
@@ -14,13 +14,10 @@ data class ResponseStoreWaste(
 	val message: String
 )
 
-data class DataStoreWaste(
+data class Data(
 
-	@field:SerializedName("account_id")
-	val accountId: String,
-
-	@field:SerializedName("category_id")
-	val categoryId: String,
+	@field:SerializedName("role")
+	val role: String,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
@@ -28,12 +25,21 @@ data class DataStoreWaste(
 	@field:SerializedName("organization_id")
 	val organizationId: String,
 
-	@field:SerializedName("weight")
-	val weight: String,
+	@field:SerializedName("name")
+	val name: String,
 
 	@field:SerializedName("created_at")
 	val createdAt: String,
 
+	@field:SerializedName("email_verified_at")
+	val emailVerifiedAt: Any,
+
 	@field:SerializedName("id")
-	val id: Int
+	val id: Int,
+
+	@field:SerializedName("avatar")
+	val avatar: String,
+
+	@field:SerializedName("email")
+	val email: String
 )

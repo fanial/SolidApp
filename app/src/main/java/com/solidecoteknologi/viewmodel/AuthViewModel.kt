@@ -16,10 +16,13 @@ import com.solidecoteknologi.data.ResponseProfile
 import com.solidecoteknologi.data.ResponseRefreshToken
 import com.solidecoteknologi.data.ResponseRegister
 import com.solidecoteknologi.data.ResponseResult
+import com.solidecoteknologi.data.ResponseUpdateProfile
 import com.solidecoteknologi.network.DataStoreManager
 import com.solidecoteknologi.network.Service
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Response
 import java.net.SocketTimeoutException
@@ -222,9 +225,15 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         val body = response.body()
         if (response.isSuccessful){
             if (body != null){
-                logout.value = true
-                message.value = body.message
-                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                if (body.status){
+                    logout.value = true
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    logout.value = false
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                }
             } else {
                 logout.value = false
                 message.value = null
@@ -376,8 +385,53 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         }
     }
 
-    // handle Response Failed
+    //Update Profile
+    private val updateProfile = MutableLiveData<ResponseUpdateProfile?>()
+    fun updateProfile(): LiveData<ResponseUpdateProfile?> = updateProfile
+    fun updateProfile(token: String, accountId: RequestBody, name: RequestBody, avatar: MultipartBody.Part, organization: RequestBody, password: RequestBody) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.updateProfile(token, accountId, name, avatar, organization, password)
+                handleUpdateProfileResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
 
+    private fun handleUpdateProfileResponse(response: Response<ResponseUpdateProfile>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                if (body.success){
+                    updateProfile.value = body
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    updateProfile.value = null
+                    message.value = body.message
+                }
+            } else {
+                isForget.value = null
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            val errorJson = response.errorBody()?.string()
+            val errorObj = errorJson?.let { JSONObject(it) }
+            val msg400 = errorObj?.getString("message")
+            val msg500 = errorObj?.getString("error")
+            val errorCode = response.code()
+            Log.e(ContentValues.TAG, "$errorMessage")
+            when (response.code()) {
+                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
+                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
+                else -> errorMessage.value = "Error: Unknown error occurred"
+
+            }
+        }
+    }
 
     //Handle Failure
     private fun handleFailure(t: Throwable) {

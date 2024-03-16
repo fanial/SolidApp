@@ -36,39 +36,39 @@
         android:textSize="25dp" />
 
     <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/label_judul"
         android:layout_margin="30dp"
-        app:cardCornerRadius="24dp"
         app:cardBackgroundColor="@color/white"
-        style="?attr/materialCardViewElevatedStyle"
-        >
+        app:cardCornerRadius="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="20dp">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layout_qty"
+                style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:endIconDrawable="@drawable/pencil_icon"
-                app:endIconMode="custom"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
-                style="?attr/textInputFilledStyle"
+                app:endIconDrawable="@drawable/pencil_icon"
+                app:endIconMode="custom"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_qty"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Masukan Berat Sampah (kg)" />
+                    android:hint="Masukan Berat Sampah (kg)"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp">
+                app:boxStrokeWidthFocused="0dp"
+                app:errorEnabled="true">
 
                 <AutoCompleteTextView
                     android:id="@+id/ed_kategori"
@@ -87,22 +88,21 @@
                     android:layout_height="62dp"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Pilih Kategori"
-                    android:inputType="none" />
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/loading_bar"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                app:lottie_rawRes="@raw/loading_linear"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                android:layout_gravity="center_horizontal"
-                android:visibility="invisible"
-                />
+                app:lottie_rawRes="@raw/loading_linear" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_kirim"
@@ -113,25 +113,64 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-<!--  Bottom Bar  -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layout_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="?attr/materialCardViewElevatedStyle"
+        app:cardBackgroundColor="@color/white"
+        android:visibility="gone"
+        android:layout_margin="20dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="25dp"
+            android:orientation="vertical">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/success"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_gravity="center"
+                app:lottie_rawRes="@raw/solid_stored" />
+            <TextView
+                android:id="@+id/msg_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                />
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <!--  Bottom Bar  -->
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_app_bar"
-        android:orientation="horizontal"
-        android:padding="15dp"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_app_bar"
         android:gravity="center_horizontal"
-        >
+        android:orientation="horizontal"
+        android:padding="15dp">
+
         <ImageView
             android:id="@+id/report"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="9dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="80dp"
+            android:padding="9dp"
             android:src="@drawable/report_icon"
             app:tint="@color/md_theme_tertiary" />
+
         <ImageView
             android:id="@+id/home"
             android:layout_width="50dp"
@@ -139,13 +178,14 @@
             android:padding="5dp"
             android:src="@drawable/home_icon"
             app:tint="@color/md_theme_primary" />
+
         <ImageView
             android:id="@+id/profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="9dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginStart="80dp"
+            android:layout_marginEnd="20dp"
+            android:padding="9dp"
             android:src="@drawable/profile_icon"
             app:tint="@color/md_theme_tertiary" />
     </LinearLayout>

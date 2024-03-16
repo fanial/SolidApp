@@ -155,6 +155,7 @@ class LoginFragment : Fragment() {
         }
     }
 
+
     private fun setupBackHandler() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

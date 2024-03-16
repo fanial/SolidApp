@@ -4,7 +4,7 @@ Features Functionality
 - [x] Logout
 - [x] Register
 - [x] Email Confirmation
-- [ ] Forget Password
+- [x] Forget Password
 - [x] Home
-- [ ] Report Daily & Monthly
+- [x] Report Daily & Monthly
 - [ ] Profile

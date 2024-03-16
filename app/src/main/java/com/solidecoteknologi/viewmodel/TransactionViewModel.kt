@@ -58,8 +58,15 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
         val body = response.body()
         if (response.isSuccessful){
             if (body != null){
-                dataWaste.postValue(body)
-                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                if (body.success){
+                    dataWaste.postValue(body)
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    dataWaste.postValue(null)
+                    message.postValue(body.message)
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                }
+
             } else {
                 dataWaste.postValue(null)
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")

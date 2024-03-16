@@ -1,11 +1,16 @@
 package com.solidecoteknologi.view
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
@@ -48,17 +53,61 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO: reset value
-        // TODO: message dialog if success
-
         setupObservers()
         setupListener()
         setupModel()
-
+        setupViews()
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().finish()
             return@addCallback
         }
+
+    }
+
+    private fun setupViews() {
+        binding.edQty.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Hide the keyboard
+                hideKeyboardQty()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.edKategori.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Hide the keyboard
+                hideKeyboard()
+                binding.edKategori.clearFocus()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.edQty.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null) {
+                    with(binding){
+                        layoutQty.error = null
+                    }
+                } else{
+                    binding.layoutQty.error = getString(R.string.harap_isi_terlebih_dahulu)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                binding.linearLayout.visibility = View.VISIBLE
+                if (p0?.length == 0) {
+                    binding.layoutQty.error = getString(R.string.harap_isi_terlebih_dahulu)
+                    binding.layoutQty.clearFocus()
+                }
+            }
+
+        })
 
     }
 
@@ -86,13 +135,22 @@ class HomeFragment : Fragment() {
         binding.edKategori.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 idCategory = listCategory[position].id.toString()
+                binding.edKategori.clearFocus()
+                hideKeyboard()
             }
 
 
 
 
     }
-
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.edKategori.windowToken, 0)
+    }
+    private fun hideKeyboardQty() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.edQty.windowToken, 0)
+    }
     private fun setupObservers() {
         model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
             if (msg != null) {
@@ -134,8 +192,20 @@ class HomeFragment : Fragment() {
 
         modelTransaction.dataWaste().observe(viewLifecycleOwner){
             if (it != null) {
-                Snackbar.make(binding.root, it.message , Snackbar.LENGTH_SHORT)
-                    .show()
+                if (it.success){
+                    binding.layoutSuccess.visibility = View.VISIBLE
+                    binding.msgSuccess.text = it.message
+                    binding.edQty.text = null
+                    binding.edKategori.text = null
+                    binding.edKategori.clearFocus()
+                    binding.edQty.clearFocus()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.layoutSuccess.visibility = View.GONE
+                    }, 1300)
+                } else {
+                    Snackbar.make(binding.root, it.message , Snackbar.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
 
