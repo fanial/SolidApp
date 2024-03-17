@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,6 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val model : AuthViewModel by viewModels()
-    private val modelTransaction : AuthViewModel by viewModels()
     private var instansi = ""
     private  var listInstansi = listOf<DataItem>()
     private  var role = ""
@@ -122,7 +122,7 @@ class RegisterFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null) {
+                if (p0 != null && Patterns.EMAIL_ADDRESS.matcher(p0.toString()).matches()) {
                     with(binding){
                         layoutEmail.error = null
                     }

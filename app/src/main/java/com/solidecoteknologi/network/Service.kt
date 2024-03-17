@@ -6,7 +6,6 @@ import com.solidecoteknologi.data.RequestLogin
 import com.solidecoteknologi.data.RequestMonthly
 import com.solidecoteknologi.data.RequestRegister
 import com.solidecoteknologi.data.RequestStoreWaste
-import com.solidecoteknologi.data.RequestUpdate
 import com.solidecoteknologi.data.ResponseCategory
 import com.solidecoteknologi.data.ResponseDailyReport
 import com.solidecoteknologi.data.ResponseLogin
@@ -22,8 +21,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -93,10 +90,10 @@ interface Service {
     suspend fun updateProfile(
         @Header("Authorization") token: String,
         @Part("account_id") accId: RequestBody,
-        @Part("name") name: RequestBody,
-        @Part avatar:  MultipartBody.Part,
-        @Part("organization") organization: RequestBody,
-        @Part("password") passwordBaru: RequestBody,
+        @Part("name") name: RequestBody?,
+        @Part avatar: MultipartBody.Part?,
+        @Part("organization") organization: RequestBody?,
+        @Part("password") passwordBaru: RequestBody?,
     ): Response<ResponseUpdateProfile>
 }
 

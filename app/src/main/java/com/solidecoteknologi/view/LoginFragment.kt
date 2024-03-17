@@ -3,6 +3,7 @@ package com.solidecoteknologi.view
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +62,7 @@ class LoginFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null) {
+                if (p0 != null && Patterns.EMAIL_ADDRESS.matcher(p0.toString()).matches()) {
                     with(binding){
                         layoutNama.error = null
                     }

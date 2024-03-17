@@ -19,8 +19,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialFadeThrough
-import com.google.android.material.transition.MaterialSharedAxis
 import com.solidecoteknologi.R
 import com.solidecoteknologi.data.DataCategoryItem
 import com.solidecoteknologi.databinding.FragmentHomeBinding
@@ -159,6 +157,31 @@ class HomeFragment : Fragment() {
             }
         }
 
+        model.messageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        modelTransaction.isLoading().observe(viewLifecycleOwner){
+            loading(it)
+        }
+
+        modelTransaction.messageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        modelTransaction.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
         model.getStoredAccount().observe(viewLifecycleOwner){ data ->
             if (data != null) {
                 token = data.token
@@ -166,6 +189,7 @@ class HomeFragment : Fragment() {
                 //model.refreshToken(token)
             }
         }
+
 
         modelTransaction.dataCategory().observe(viewLifecycleOwner){ listCat ->
             if (listCat != null){
@@ -213,6 +237,17 @@ class HomeFragment : Fragment() {
             if (it == true){
                 binding.loadingBar.visibility = View.VISIBLE
             } else {
+                binding.loadingBar.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+    private fun loading(status: Boolean) {
+        when(status){
+            true -> {
+                binding.loadingBar.visibility = View.VISIBLE
+            }
+            false -> {
                 binding.loadingBar.visibility = View.INVISIBLE
             }
         }

@@ -6,6 +6,6 @@ data class ResponseResult(
     @field:SerializedName("message")
     val message: String,
 
-    @field:SerializedName("status")
+    @field:SerializedName("success")
     val status: Boolean,
 )

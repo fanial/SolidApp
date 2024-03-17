@@ -340,8 +340,8 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
     }
 
     //Forget Password
-    private val isForget = MutableLiveData<Boolean?>()
-    fun isForget(): LiveData<Boolean?> = isForget
+    private val isForget = MutableLiveData<ResponseResult?>()
+    fun isForget(): LiveData<ResponseResult?> = isForget
     fun forgetPassword(email: String) {
         viewModelScope.launch {
             _loading.value = true
@@ -360,10 +360,10 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         if (response.isSuccessful){
             if (body != null){
                 if (body.status){
-                    isForget.value = true
+                    isForget.value = body
                     Log.i(ContentValues.TAG, "onResponse: Success Load Response")
                 } else {
-                    isForget.value = false
+                    isForget.value = body
                 }
             } else {
                 isForget.value = null
@@ -388,11 +388,18 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
     //Update Profile
     private val updateProfile = MutableLiveData<ResponseUpdateProfile?>()
     fun updateProfile(): LiveData<ResponseUpdateProfile?> = updateProfile
-    fun updateProfile(token: String, accountId: RequestBody, name: RequestBody, avatar: MultipartBody.Part, organization: RequestBody, password: RequestBody) {
+    fun updateProfile(token: String, accountId: RequestBody, name: RequestBody?, avatar: MultipartBody.Part?, organization: RequestBody?, password: RequestBody?) {
         viewModelScope.launch {
             _loading.value = true
             try {
-                val response = service.updateProfile(token, accountId, name, avatar, organization, password)
+                val response = service.updateProfile(
+                    token,
+                    accountId,
+                    name,
+                    avatar,
+                    organization,
+                    password // Return if password is null
+                )
                 handleUpdateProfileResponse(response)
             } catch (t: Throwable) {
                 handleFailure(t)

@@ -27,7 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.solidecoteknologi.R
 import com.solidecoteknologi.data.DataItem
 import com.solidecoteknologi.databinding.FragmentProfileBinding
@@ -75,7 +75,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupViews() {
-
+        model.listOrganization()
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -108,21 +108,49 @@ class ProfileFragment : Fragment() {
             val name = binding.edNama.text.toString()
             val organization = instansi
             val password = binding.edPassword.text.toString()
-            val avatar = photoProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart : MultipartBody.Part = MultipartBody.Part.createFormData(
-                "avatar",
-                photoProfile!!.name,
-                avatar
-            )
+            if (photoProfile ==  null){
+                model.updateProfile(
+                    token,
+                    idAccount.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    name.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    null,
+                    organization.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    password.toRequestBody("text/plain".toMediaTypeOrNull())
+                )
+            } else if (password.isEmpty()){
+                val avatar = photoProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                val imageMultipart : MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "avatar",
+                    photoProfile?.name,
+                    avatar
+                )
 
-            model.updateProfile(
-                token,
-                idAccount.toRequestBody("text/plain".toMediaTypeOrNull()),
-                name.toRequestBody("text/plain".toMediaTypeOrNull()),
-                imageMultipart,
-                organization.toRequestBody("text/plain".toMediaTypeOrNull()),
-                password.toRequestBody("text/plain".toMediaTypeOrNull())
-            )
+                model.updateProfile(
+                    token,
+                    idAccount.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    name.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    imageMultipart,
+                    organization.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    null
+                )
+            } else {
+                val avatar = photoProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                val imageMultipart : MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "avatar",
+                    photoProfile?.name,
+                    avatar
+                )
+
+                model.updateProfile(
+                    token,
+                    idAccount.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    name.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    imageMultipart,
+                    organization.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    password.toRequestBody("text/plain".toMediaTypeOrNull())
+                )
+
+            }
 
         }
     }
@@ -152,10 +180,27 @@ class ProfileFragment : Fragment() {
     private fun logout() {
         model.logout()
         model.logout(token)
-        model.listOrganization()
     }
 
     private fun setupObservers() {
+
+        model.isLoading().observe(viewLifecycleOwner){
+            loading(it)
+        }
+
+        model.messageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
 
         model.updateProfile().observe(viewLifecycleOwner){
             if (it != null){
@@ -192,26 +237,28 @@ class ProfileFragment : Fragment() {
 
         model.profile().observe(viewLifecycleOwner){
             if (it != null){
-                val data = it.data
-                binding.edNama.setText(data.name)
-                binding.edEmail.setText(data.email)
-                binding.edRole.setText(data.role)
-                binding.edInstansi.setText(data.organization.name)
-                instansi = data.organization.id.toString()
-                loadImage(requireContext(), data.avatar, binding.photoProfile)
                 if (it.success){
-                    model.logout()
-                    findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
+                    val data = it.data
+                    binding.edNama.setText(data.name)
+                    binding.edEmail.setText(data.email)
+                    binding.edRole.setText(data.role)
+                    binding.edInstansi.setText(data.organization.name)
+                    instansi = data.organization.id.toString()
+                    if (data.avatar != null){
+                        loadImage(requireContext(), data.avatar, binding.photoProfile)
+                    }
                 } else {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
 
         model.isLogout().observe(viewLifecycleOwner){
             if (it == true){
-                model.logout()
                 findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
+            } else {
+                Toast.makeText(context, "Gagal Logout", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -300,6 +347,18 @@ class ProfileFragment : Fragment() {
             }
         }
     }
+    private fun loading(status: Boolean) {
+        when(status){
+            true -> {
+                binding.loadingBar.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.loadingBar.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+
 
     private fun hideKeyboard() {
         val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

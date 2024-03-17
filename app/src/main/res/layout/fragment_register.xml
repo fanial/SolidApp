@@ -70,7 +70,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
-                    android:hint="Nama" />
+                    android:hint="Nama"
+                    android:maxLines="1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +93,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_edit_text"
                     android:hint="Alamat Email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

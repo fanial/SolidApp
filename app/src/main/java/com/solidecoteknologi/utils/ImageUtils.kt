@@ -6,11 +6,11 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.net.Uri
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.solidecoteknologi.R
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -83,8 +83,9 @@ fun loadImage(context: Context, img: String, imageView: ImageView) {
     try {
         Glide.with(context).clear(imageView)
         Glide.with(context)
-            .load(img)
+            .load("https://solidecoteknologi.com/$img")
             .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .error(R.drawable.profile_icon)
             .skipMemoryCache(true)
             .into(imageView)
 

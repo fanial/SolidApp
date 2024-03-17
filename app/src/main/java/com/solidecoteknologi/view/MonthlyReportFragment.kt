@@ -1,27 +1,19 @@
 package com.solidecoteknologi.view
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.google.android.material.transition.MaterialFadeThrough
-import com.google.android.material.transition.MaterialSharedAxis
-import com.solidecoteknologi.R
-import com.solidecoteknologi.databinding.FragmentDailyReportBinding
+import com.google.android.material.snackbar.Snackbar
 import com.solidecoteknologi.databinding.FragmentMonthlyReportBinding
 import com.solidecoteknologi.viewmodel.AuthViewModel
 import com.solidecoteknologi.viewmodel.TransactionViewModel
@@ -37,7 +29,6 @@ class MonthlyReportFragment : Fragment() {
 
     private val modelTransaction : TransactionViewModel by viewModels()
     private val model : AuthViewModel by viewModels()
-    private var token = ""
     private var startDate = ""
     private var endDate = ""
 
@@ -63,6 +54,38 @@ class MonthlyReportFragment : Fragment() {
 
         val colors = mutableListOf<Int>()
         val categoryLabels = mutableListOf<String>()
+
+        model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        model.messageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        modelTransaction.isLoading().observe(viewLifecycleOwner){
+            loading(it)
+        }
+
+        modelTransaction.messageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        modelTransaction.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
+            if (msg != null) {
+                Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        }
 
         modelTransaction.dataMonthly().observe(viewLifecycleOwner){
             if (it != null){
@@ -101,26 +124,43 @@ class MonthlyReportFragment : Fragment() {
                 val barData = BarData(dataSet)
 
                 binding.lineChart.apply {
-                    description.isEnabled = false // Disable description
-                    axisLeft.textColor = Color.BLACK // Set left axis text color
-                    axisRight.isEnabled = false // Disable right axis
-                    xAxis.textColor = Color.BLACK // Set x-axis text color
-                    legend.isEnabled = false
+                    if (entries.isEmpty()) {
+                        setNoDataText("No data available")
+                        setNoDataTextColor(resources.getColor(com.solidecoteknologi.R.color.md_theme_primary))
+                        setNoDataTextTypeface(Typeface.DEFAULT_BOLD)
+                    } else {
+                        description.isEnabled = false // Disable description
+                        axisLeft.textColor = Color.BLACK // Set left axis text color
+                        axisRight.isEnabled = false // Disable right axis
+                        xAxis.textColor = Color.BLACK // Set x-axis text color
+                        legend.isEnabled = false
 
-                    val xAxis = xAxis
-                    xAxis.valueFormatter = IndexAxisValueFormatter(categoryLabels)
-                    xAxis.position = XAxis.XAxisPosition.BOTTOM
-                    xAxis.granularity = 1f
-                    xAxis.isGranularityEnabled = true
+                        val xAxis = xAxis
+                        xAxis.valueFormatter = IndexAxisValueFormatter(categoryLabels)
+                        xAxis.position = XAxis.XAxisPosition.BOTTOM
+                        xAxis.granularity = 1f
+                        xAxis.isGranularityEnabled = true
 
-                    // Set data to the line chart
-                    data = barData
+                        // Set data to the line chart
+                        data = barData
+                        // Refresh the chart
+                        invalidate()
+                    }
 
-                    // Refresh the chart
-                    invalidate()
                 }
             }
 
+        }
+    }
+
+    private fun loading(status: Boolean) {
+        when(status){
+            true -> {
+                binding.loadingBar.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.loadingBar.visibility = View.INVISIBLE
+            }
         }
     }
 

@@ -72,7 +72,7 @@
                         android:id="@+id/ed_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_edit_text"
+                        android:background="@drawable/shape_disable_edit_text"
                         android:text="Alamat Email" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -84,14 +84,19 @@
                     android:layout_height="wrap_content"
                     app:endIconDrawable="@drawable/pencil_icon"
                     app:endIconMode="custom"
-                    app:errorEnabled="true">
+                    app:errorEnabled="true"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    style="?attr/textInputFilledStyle">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ed_nama"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_edit_text"
-                        android:text="Nama" />
+                        android:hint="Nama"
+                        android:maxLines="1"
+                        android:textColor="@color/md_theme_primary"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,14 +106,19 @@
                     android:layout_height="wrap_content"
                     app:endIconDrawable="@drawable/pin_icon"
                     app:endIconMode="custom"
-                    app:errorEnabled="true">
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    style="?attr/textInputFilledStyle"
+                    app:errorEnabled="true"
+                    app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ed_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_edit_text"
-                        android:text="Password" />
+                        android:hint="Password"
+                        android:maxLines="1"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,15 +126,20 @@
                     android:id="@+id/layout_instansi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    app:errorEnabled="true">
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    app:errorEnabled="true"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp">
 
                     <AutoCompleteTextView
                         android:id="@+id/ed_instansi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shape_edit_text"
-                        android:text="Instansi" />
+                        android:hint="Instansi"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/md_theme_primary"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,7 +156,7 @@
                         android:id="@+id/ed_role"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_edit_text"
+                        android:background="@drawable/shape_disable_edit_text"
                         android:text="Role" />
 
                 </com.google.android.material.textfield.TextInputLayout>
