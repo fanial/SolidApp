@@ -29,9 +29,9 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
         }
     }
 
-    suspend fun saveNewToken(isToken : String) {
+    suspend fun saveStatus(isStatus : Boolean) {
         setDataStore.edit { preferences ->
-            preferences[TOKEN] = isToken
+            preferences[ISLOGIN] = isStatus
         }
     }
 
@@ -43,7 +43,12 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
     }
 
     suspend fun delete(){
-        setDataStore.edit { pref -> pref.clear() }
+        setDataStore.edit {
+            setDataStore.edit { pref ->
+                pref.remove(TOKEN)
+                pref.remove(IDACC)
+            }
+        }
     }
 
     companion object {

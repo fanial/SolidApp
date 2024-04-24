@@ -59,6 +59,15 @@
                 android:orientation="vertical"
                 android:padding="20dp"
                 android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/email_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email belum diverifikasi"
+                    android:textColor="@color/md_theme_error"
+                    android:visibility="gone"
+                    />
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layout_email"
                     android:layout_width="match_parent"
@@ -200,28 +209,39 @@
         android:gravity="center_horizontal"
         >
         <ImageView
-            android:id="@+id/report"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="9dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="80dp"
-            android:src="@drawable/report_icon"
-            app:tint="@color/md_theme_tertiary" />
-        <ImageView
             android:id="@+id/home"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="7dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="50dp"
             android:src="@drawable/home_icon"
             app:tint="@color/md_theme_tertiary" />
+
+        <ImageView
+            android:id="@+id/history"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="9dp"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/report_icon"
+            app:tint="@color/md_theme_tertiary" />
+
+        <ImageView
+            android:id="@+id/report"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="2dp"
+            android:src="@drawable/pie_chart_40px"
+            app:tint="@color/md_theme_tertiary" />
+
         <ImageView
             android:id="@+id/profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="5dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginStart="80dp"
+            android:padding="5dp"
+            android:layout_marginStart="50dp"
             android:src="@drawable/profile_icon"
             app:tint="@color/md_theme_primary" />
     </LinearLayout>

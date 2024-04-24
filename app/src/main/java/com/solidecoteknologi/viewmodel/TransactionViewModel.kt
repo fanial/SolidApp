@@ -72,18 +72,8 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            val errorJson = response.errorBody()?.string()
-            val errorObj = errorJson?.let { JSONObject(it) }
-            val msg400 = errorObj?.getString("message")
-            val msg500 = errorObj?.getString("error")
-            val errorCode = response.code()
+            errorMessage.value = "${response.code()}: ${response.message()}"
             Log.e(ContentValues.TAG, "$errorMessage")
-            when (response.code()) {
-                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
-                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
-                else -> errorMessage.value = "Error: Unknown error occurred"
-
-            }
         }
     }
 
@@ -109,25 +99,21 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
         val body = response.body()
         if (response.isSuccessful){
             if (body != null){
-                dataCategory.postValue(body)
-                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                if (body.success){
+                    dataCategory.postValue(body)
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    dataCategory.postValue(null)
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Failed Load Response")
+                }
             } else {
                 dataCategory.postValue(null)
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            val errorJson = response.errorBody()?.string()
-            val errorObj = errorJson?.let { JSONObject(it) }
-            val msg400 = errorObj?.getString("message")
-            val msg500 = errorObj?.getString("error")
-            val errorCode = response.code()
+            errorMessage.value = "${response.code()}: ${response.message()}"
             Log.e(ContentValues.TAG, "$errorMessage")
-            when (response.code()) {
-                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
-                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
-                else -> errorMessage.value = "Error: Unknown error occurred"
-
-            }
         }
     }
 
@@ -155,23 +141,21 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
             if (body != null){
                 dataDaily.postValue(body)
                 Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                if (body.success){
+                    dataDaily.postValue(body)
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    dataDaily.postValue(null)
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Failed Load Response")
+                }
             } else {
                 dataDaily.postValue(null)
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            val errorJson = response.errorBody()?.string()
-            val errorObj = errorJson?.let { JSONObject(it) }
-            val msg400 = errorObj?.getString("message")
-            val msg500 = errorObj?.getString("error")
-            val errorCode = response.code()
+            errorMessage.value = "${response.code()}: ${response.message()}"
             Log.e(ContentValues.TAG, "$errorMessage")
-            when (response.code()) {
-                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
-                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
-                else -> errorMessage.value = "Error: Unknown error occurred"
-
-            }
         }
     }
 
@@ -196,25 +180,21 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
         val body = response.body()
         if (response.isSuccessful){
             if (body != null){
-                dataMonthly.postValue(body)
-                Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                if (body.success){
+                    dataMonthly.postValue(body)
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    dataMonthly.postValue(null)
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Failed Load Response")
+                }
             } else {
                 dataMonthly.postValue(null)
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {
-            val errorJson = response.errorBody()?.string()
-            val errorObj = errorJson?.let { JSONObject(it) }
-            val msg400 = errorObj?.getString("message")
-            val msg500 = errorObj?.getString("error")
-            val errorCode = response.code()
+            errorMessage.value = "${response.code()}: ${response.message()}"
             Log.e(ContentValues.TAG, "$errorMessage")
-            when (response.code()) {
-                in 400..499 -> errorMessage.value = "$errorCode: $msg400"
-                in 500..599 -> errorMessage.value = "$errorCode: $msg500"
-                else -> errorMessage.value = "Error: Unknown error occurred"
-
-            }
         }
     }
 

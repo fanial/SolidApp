@@ -37,9 +37,9 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
             store.saveDataStore(token, idAcc, status)
         }
     }
-    fun setNewToken(token: String){
+    fun setStatus(status: Boolean){
         viewModelScope.launch {
-            store.saveNewToken(token)
+            store.saveStatus(status)
         }
     }
 
@@ -120,8 +120,10 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
         viewModelScope.launch {
             _loading.value = true
             try {
+                val data = RequestRegister(name, email, password, passValidation, role, organization)
                 val response = service.register(RequestRegister(name, email, password, passValidation, role, organization))
                 handleRegisterResponse(response)
+                Log.i("TAG", "register: $data")
             } catch (t: Throwable) {
                 handleFailure(t)
             }

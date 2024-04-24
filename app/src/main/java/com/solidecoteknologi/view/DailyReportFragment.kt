@@ -46,7 +46,7 @@ class DailyReportFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setRetainInstance(true)
         setupObservers()
         setupViews()
 
@@ -148,9 +148,11 @@ class DailyReportFragment : Fragment() {
                         setNoDataTextColor(resources.getColor(com.solidecoteknologi.R.color.md_theme_primary))
                         setNoDataTextTypeface(Typeface.DEFAULT_BOLD)
                     } else {
+                        setUsePercentValues(true)
+                        setDrawSliceText(false)
+                        setMinAngleForSlices(10f)
                         description.isEnabled = false
                         setEntryLabelColor(R.color.black)
-                        setUsePercentValues(true)
                         setHoleColor(R.color.transparent)
                         setTransparentCircleColor(R.color.transparent)
                         setTransparentCircleAlpha(0)

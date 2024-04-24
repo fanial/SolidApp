@@ -13,49 +13,43 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/corner_top_1" />
 
-    <ImageView
-        android:id="@+id/img_logo_app"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:padding="45dp"
-        android:layout_above="@id/label_judul"
-        android:src="@drawable/logo_solid"
-        />
-
-    <TextView
-        android:id="@+id/label_judul"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:text="Solusi Limbah Indonesia"
-        android:textSize="24sp"
-        android:fontFamily="@font/notobold"
-        android:textColor="?attr/colorPrimary"/>
-
-    <TextView
-        android:id="@+id/label_subjudul"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label_judul"
-        android:textSize="16sp"
-        android:gravity="center_horizontal"
-        android:text="Aplikasi monitoring pengolahan sampah"
-        android:textColor="@color/md_theme_primary"
-        />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_logo_app"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:scaleType="centerInside"
+            android:paddingStart="5dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/logo_solid" />
 
-    <Button
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label_subjudul"
-        android:background="@drawable/shape_corner"
-        android:text="Mulai"
-        android:layout_marginTop="50dp"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/label_judul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Solusi Limbah Indonesia"
+            android:textSize="24sp"
+            android:fontFamily="@font/notobold"
+            android:textColor="?attr/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/label_subjudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
+            android:text="Aplikasi monitoring pengolahan sampah"
+            android:textColor="@color/md_theme_primary"
+            />
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/img_bottom_1"

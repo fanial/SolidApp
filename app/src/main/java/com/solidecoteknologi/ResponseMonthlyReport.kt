@@ -1,14 +1,14 @@
-package com.solidecoteknologi.data
+package com.solidecoteknologi
 
 import com.google.gson.annotations.SerializedName
 
 data class ResponseMonthlyReport(
 
 	@field:SerializedName("total_carbon")
-	val totalCarbon: Float,
+	val totalCarbon: Int,
 
 	@field:SerializedName("data")
-	val data: List<DataMonthlyItem>,
+	val data: List<DataItem>,
 
 	@field:SerializedName("success")
 	val success: Boolean,
@@ -17,13 +17,13 @@ data class ResponseMonthlyReport(
 	val message: String
 )
 
-data class DataMonthlyItem(
+data class DataItem(
 
 	@field:SerializedName("amount")
-	val amount: Float,
+	val amount: Int,
 
 	@field:SerializedName("carbon")
-	val carbon: Float,
+	val carbon: Int,
 
 	@field:SerializedName("category")
 	val category: String

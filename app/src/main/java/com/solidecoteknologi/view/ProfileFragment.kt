@@ -178,7 +178,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logout() {
-        model.logout()
         model.logout(token)
     }
 
@@ -247,16 +246,20 @@ class ProfileFragment : Fragment() {
                     if (data.avatar != null){
                         loadImage(requireContext(), data.avatar, binding.photoProfile)
                     }
+                    if (data.emailVerifiedAt == null){
+                        binding.emailStatus.visibility = View.VISIBLE
+                    }
                 } else {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
 
         model.isLogout().observe(viewLifecycleOwner){
             if (it == true){
-                findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
+                model.logout()
+                model.setStatus(false)
+                findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
             } else {
                 Toast.makeText(context, "Gagal Logout", Toast.LENGTH_SHORT).show()
             }

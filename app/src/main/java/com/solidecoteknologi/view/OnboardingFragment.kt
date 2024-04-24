@@ -1,6 +1,7 @@
 package com.solidecoteknologi.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,17 +44,32 @@ class OnboardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model.getStatus().observe(viewLifecycleOwner) {
-            if (it == true) {
-                findNavController().navigate(R.id.action_onboardingFragment_to_homeFragment)
+        model.getStatus().observe(viewLifecycleOwner){
+            if (it == false) {
+                model.getToken().observe(viewLifecycleOwner){ token ->
+                    if (token != null && token.isNotBlank()){
+                        model.getProfile(token)
+                    } else {
+                        findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
+                    }
+                    Log.i("TAG", "TOKEN: $token")
+                }
             } else {
-                binding.btnStart.visibility = View.VISIBLE
+                findNavController().navigate(R.id.action_onboardingFragment_to_homeFragment)
             }
         }
 
-        binding.btnStart.setOnClickListener {
-            findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
+        model.profile().observe(viewLifecycleOwner){ profile ->
+            if (profile != null){
+                if (!profile.success){
+                    findNavController().navigate(R.id.action_onboardingFragment_to_homeFragment)
+                } else {
+                    findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
+                }
+            }
         }
+
+
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().finish()

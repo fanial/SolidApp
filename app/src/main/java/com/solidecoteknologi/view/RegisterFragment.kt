@@ -3,6 +3,7 @@ package com.solidecoteknologi.view
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
@@ -34,8 +35,8 @@ class RegisterFragment : Fragment() {
     private val model : AuthViewModel by viewModels()
     private var instansi = ""
     private  var listInstansi = listOf<DataItem>()
-    private  var role = ""
-    private val item = listOf("user", "pic")
+    var role = ""
+    private val item = listOf("User", "PIC")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,7 +111,6 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0) {
                     binding.layoutNama.error = getString(R.string.harap_isi_terlebih_dahulu)
-                    binding.layoutNama.clearFocus()
                 }
             }
 
@@ -134,7 +134,6 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0) {
                     binding.layoutEmail.error = getString(R.string.harap_isi_terlebih_dahulu)
-                    binding.layoutEmail.clearFocus()
                 }
             }
 
@@ -158,7 +157,6 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPassword.error = getString(R.string.harap_isi_terlebih_dahulu)
-                    binding.layoutPassword.clearFocus()
                 }
             }
 
@@ -182,7 +180,6 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0?.length == 0 && p0.length <= 6) {
                     binding.layoutPasswordValidation.error = getString(R.string.harap_isi_terlebih_dahulu)
-                    binding.layoutPasswordValidation.clearFocus()
                 }
             }
 
@@ -232,6 +229,8 @@ class RegisterFragment : Fragment() {
                     binding.layoutInstansi.error = getString(R.string.harap_isi_terlebih_dahulu)
                     binding.layoutInstansi.clearFocus()
                     hideKeyboard()
+                } else {
+                    binding.edInstansi.ellipsize = TextUtils.TruncateAt.START
                 }
             }
 
@@ -276,7 +275,13 @@ class RegisterFragment : Fragment() {
 
         binding.edRole.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                role = item[position]
+                val position = item[position]
+                //role = position
+                if (position == "User"){
+                    role = "user"
+                } else {
+                    role = "PIC"
+                }
                 Log.i("TAG", "ROLE: $role")
             }
 
@@ -300,8 +305,6 @@ class RegisterFragment : Fragment() {
                 val email = edEmail.text.toString()
                 val pass = edPassword.text.toString()
                 val passValid = edPasswordValidation.text.toString()
-                val instansi = instansi
-                val role = edRole.text.toString()
                 if (name.isNotEmpty() && email.isNotEmpty() && pass.isNotEmpty() && passValid.isNotEmpty() && role.isNotEmpty() && instansi.isNotEmpty()){
                     model.register(name, email, pass, passValid, role, instansi)
                 } else {
