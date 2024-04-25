@@ -87,6 +87,10 @@ class ProfileFragment : Fragment() {
         binding.report.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_reportFragment)
         }
+        binding.history.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_historyFragment)
+        }
+
         binding.btnLogout.setOnClickListener {
             logout()
         }

@@ -108,6 +108,9 @@ class HomeFragment : Fragment() {
         binding.report.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_reportFragment)
         }
+        binding.history.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_historyFragment)
+        }
 
         binding.btnKirim.setOnClickListener {
             val qty = binding.edQty.text.toString()
@@ -125,8 +128,6 @@ class HomeFragment : Fragment() {
                 idCategory = listCategory[position].id.toString()
                 binding.edKategori.clearFocus()
             }
-
-
 
 
     }
