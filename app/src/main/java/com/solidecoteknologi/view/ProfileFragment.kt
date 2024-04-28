@@ -88,7 +88,11 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_reportFragment)
         }
         binding.btnLogout.setOnClickListener {
-            logout()
+            model.logout()
+            findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+        }
+        binding.history.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_historyFragment)
         }
 
         binding.cardProfile.setOnClickListener {
@@ -252,16 +256,6 @@ class ProfileFragment : Fragment() {
                 } else {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
-            }
-        }
-
-        model.isLogout().observe(viewLifecycleOwner){
-            if (it == true){
-                model.logout()
-                model.setStatus(false)
-                findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
-            } else {
-                Toast.makeText(context, "Gagal Logout", Toast.LENGTH_SHORT).show()
             }
         }
     }

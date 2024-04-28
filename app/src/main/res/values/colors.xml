@@ -143,4 +143,7 @@
     <color name="md_theme_surfaceContainer_highContrast">#EAEFEA</color>
     <color name="md_theme_surfaceContainerHigh_highContrast">#E4EAE4</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#DEE4DF</color>
+    <color name="ewaste">#DC3545</color>
+    <color name="organik">#28A745</color>
+    <color name="anorganik">#ffC107</color>
 </resources>

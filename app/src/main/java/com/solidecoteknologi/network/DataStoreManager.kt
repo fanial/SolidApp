@@ -45,8 +45,7 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
     suspend fun delete(){
         setDataStore.edit {
             setDataStore.edit { pref ->
-                pref.remove(TOKEN)
-                pref.remove(IDACC)
+                pref.clear()
             }
         }
     }

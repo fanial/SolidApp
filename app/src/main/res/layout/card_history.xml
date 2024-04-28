@@ -45,16 +45,26 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/type"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_type"
             android:layout_below="@id/datetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_marginTop="10dp"
-            android:text="Organik"
-            android:background="@drawable/shape_disable_edit_text"
-            />
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="@color/organik"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/type"
+                android:layout_below="@id/datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Organik"
+                android:textColor="@color/white"
+                />
+
+        </androidx.cardview.widget.CardView>
+
 
     </RelativeLayout>
 

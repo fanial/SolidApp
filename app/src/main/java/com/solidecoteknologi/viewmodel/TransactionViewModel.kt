@@ -11,6 +11,7 @@ import com.solidecoteknologi.data.RequestMonthly
 import com.solidecoteknologi.data.RequestStoreWaste
 import com.solidecoteknologi.data.ResponseCategory
 import com.solidecoteknologi.data.ResponseDailyReport
+import com.solidecoteknologi.data.ResponseHistory
 import com.solidecoteknologi.data.ResponseMonthlyReport
 import com.solidecoteknologi.data.ResponseStoreWaste
 import com.solidecoteknologi.network.Service
@@ -190,6 +191,44 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
                 }
             } else {
                 dataMonthly.postValue(null)
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            errorMessage.value = "${response.code()}: ${response.message()}"
+            Log.e(ContentValues.TAG, "$errorMessage")
+        }
+    }
+
+    private val dataHistory : MutableLiveData<ResponseHistory?> = MutableLiveData()
+    fun dataHistory() : MutableLiveData<ResponseHistory?> {
+        return dataHistory
+    }
+    fun historyList(token: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.history(token)
+                handleHistoryResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
+    private fun handleHistoryResponse(response: Response<ResponseHistory>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                if (body.success){
+                    dataHistory.postValue(body)
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    dataHistory.postValue(null)
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Failed Load Response")
+                }
+            } else {
+                dataHistory.postValue(null)
                 Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
             }
         } else {

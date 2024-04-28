@@ -1,6 +1,8 @@
 package com.solidecoteknologi.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
@@ -118,7 +120,9 @@ class LoginFragment : Fragment() {
             if (it != null){
                 val data = it.data
                 model.setToken("${it.tokenType} ${it.token}", data.id.toString(), true)
-                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                }, 500)
             }
         }
 

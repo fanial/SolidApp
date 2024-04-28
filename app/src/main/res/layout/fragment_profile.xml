@@ -9,7 +9,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/layout_bottom_bar">
+        android:layout_above="@id/linearLayout">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -199,51 +199,56 @@
 
     <!--  Bottom Bar  -->
     <LinearLayout
-        android:id="@+id/layout_bottom_bar"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_app_bar"
-        android:orientation="horizontal"
-        android:padding="15dp"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_app_bar"
         android:gravity="center_horizontal"
-        >
-        <ImageView
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
             android:id="@+id/home"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="7dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="50dp"
-            android:src="@drawable/home_icon"
-            app:tint="@color/md_theme_tertiary" />
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/home_icon"
+            android:text="Aktifitas"
+            android:drawablePadding="6dp"
+            android:gravity="center_horizontal"
+            app:drawableTint="@color/md_theme_tertiary"
+            android:textColor="@color/md_theme_tertiary"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/history"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="9dp"
-            android:layout_marginEnd="50dp"
-            android:src="@drawable/report_icon"
-            app:tint="@color/md_theme_tertiary" />
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Riwayat"
+            android:gravity="center_horizontal"
+            android:drawablePadding="6dp"
+            android:drawableTop="@drawable/report_icon"
+            app:drawableTint="@color/md_theme_tertiary"
+            android:textColor="@color/md_theme_tertiary"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/report"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="2dp"
-            android:src="@drawable/pie_chart_40px"
-            app:tint="@color/md_theme_tertiary" />
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/pie_chart_40px"
+            android:text="Laporan"
+            android:gravity="center_horizontal"
+            app:drawableTint="@color/md_theme_tertiary"
+            android:textColor="@color/md_theme_tertiary"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/profile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:padding="5dp"
-            android:layout_marginStart="50dp"
-            android:src="@drawable/profile_icon"
-            app:tint="@color/md_theme_primary" />
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Akun"
+            android:gravity="center_horizontal"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/profile_icon"
+            app:tint="@color/md_theme_primary"/>
     </LinearLayout>
 
     <com.airbnb.lottie.LottieAnimationView

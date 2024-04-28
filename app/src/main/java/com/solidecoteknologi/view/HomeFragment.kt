@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,86 +56,21 @@ class HomeFragment : Fragment() {
 
         setupObservers()
         setupListener()
-        setupModel()
         setupViews()
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().finish()
             return@addCallback
         }
 
-    }
-
-    private fun setupViews() {
-        binding.edQty.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                // Hide the keyboard
-                hideKeyboardQty()
-                return@setOnEditorActionListener true
-            }
-            false
-        }
-        binding.edQty.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.layoutQty.error = null
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0 != null) {
-                    binding.layoutQty.error = null
-                } else {
-                    binding.layoutQty.error = getString(R.string.harap_isi_terlebih_dahulu)
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                binding.linearLayout.visibility = View.VISIBLE
-                if (p0?.length == 0) {
-                    binding.layoutQty.clearFocus()
-                }
-            }
-
-        })
-
-    }
-
-    private fun setupModel() {
-        modelTransaction.listCategory()
-    }
-
-    private fun setupListener() {
-        binding.profile.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
-        }
-        binding.report.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_reportFragment)
-        }
-
-        binding.btnKirim.setOnClickListener {
-            val qty = binding.edQty.text.toString()
-            if (qty.isNotEmpty() && idCategory.isNotEmpty()){
-                lifecycleScope.launch {
-                    modelTransaction.storeWaste(token, idAccount.toInt(), qty.toFloat(), idCategory.toInt())
-                }
-            } else {
-                binding.layoutQty.error = getString(R.string.harap_isi_terlebih_dahulu)
-            }
-        }
-
-        binding.edKategori.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                idCategory = listCategory[position].id.toString()
-                binding.edKategori.clearFocus()
-            }
-
-
-
-
-    }
-    private fun hideKeyboardQty() {
-        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(binding.edQty.windowToken, 0)
+        Log.i("TAG", "HOME: $token")
     }
     private fun setupObservers() {
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            modelTransaction.listCategory()
+        }, 500)
+
         model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
             if (msg != null) {
                 Snackbar.make(binding.root,msg , Snackbar.LENGTH_SHORT)
@@ -167,18 +103,21 @@ class HomeFragment : Fragment() {
             if (data != null) {
                 token = data.token
                 idAccount = data.idAccount
-                model.getProfile(token)
+                Log.i("TAG", "TOKEN: $token")
+                checkAccount()
             }
         }
 
         model.profile().observe(viewLifecycleOwner) {
             if (it != null) {
                 if (!it.success) {
+                    model.logout()
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
                 }
             }
         }
+
         modelTransaction.dataCategory().observe(viewLifecycleOwner){ listCat ->
             if (listCat != null){
                 listCategory = listCat.data as MutableList<DataCategoryItem>
@@ -188,23 +127,97 @@ class HomeFragment : Fragment() {
             }
         }
 
-        modelTransaction.dataWaste().observe(viewLifecycleOwner){
-            if (it != null) {
-                if (it.success){
-                    binding.layoutSuccess.visibility = View.VISIBLE
-                    binding.msgSuccess.text = it.message
-                    binding.edQty.text = null
-                    binding.edKategori.text = null
-                    binding.edKategori.clearFocus()
-                    binding.edQty.clearFocus()
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        binding.layoutSuccess.visibility = View.GONE
-                    }, 1300)
-                } else {
-                    Snackbar.make(binding.root, it.message , Snackbar.LENGTH_SHORT)
-                        .show()
+        lifecycleScope.launch{
+            modelTransaction.dataWaste().observe(viewLifecycleOwner){
+                if (it != null) {
+                    if (it.success){
+                        binding.layoutSuccess.visibility = View.VISIBLE
+                        binding.msgSuccess.text = it.message
+                        binding.edQty.text = null
+                        binding.edKategori.text = null
+                        binding.edKategori.clearFocus()
+                        binding.edQty.clearFocus()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            binding.layoutSuccess.visibility = View.GONE
+                        }, 1300)
+                    } else {
+                        Snackbar.make(binding.root, it.message , Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
         }
+    }
+    private fun setupViews() {
+
+        binding.edQty.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Hide the keyboard
+                hideKeyboardQty()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+        binding.edQty.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.layoutQty.error = null
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null) {
+                    binding.layoutQty.error = null
+                } else {
+                    binding.layoutQty.error = getString(R.string.harap_isi_terlebih_dahulu)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                binding.linearLayout.visibility = View.VISIBLE
+                if (p0?.length == 0) {
+                    binding.layoutQty.clearFocus()
+                }
+            }
+
+        })
+
+    }
+
+    private fun setupListener() {
+        binding.profile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+        }
+        binding.report.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_reportFragment)
+        }
+        binding.history.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_historyFragment)
+        }
+
+        binding.btnKirim.setOnClickListener {
+            val qty = binding.edQty.text.toString()
+            if (qty.isNotEmpty() && idCategory.isNotEmpty()){
+                lifecycleScope.launch {
+                    modelTransaction.storeWaste(token, idAccount.toInt(), qty.toFloat(), idCategory.toInt())
+                }
+            } else {
+                binding.layoutQty.error = getString(R.string.harap_isi_terlebih_dahulu)
+            }
+        }
+
+        binding.edKategori.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                idCategory = listCategory[position].id.toString()
+                binding.edKategori.clearFocus()
+            }
+
+    }
+    private fun hideKeyboardQty() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.edQty.windowToken, 0)
+    }
+
+
+    private fun checkAccount() {
+        model.getProfile(token)
     }
 }

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.HistoryFragment"
-    android:padding="20dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.HistoryFragment">
 
     <TextView
         android:id="@+id/label"
@@ -20,7 +20,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_below="@id/label"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/linearLayout"
+        android:padding="20dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_history"
@@ -28,4 +30,72 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/card_history"/>
     </androidx.core.widget.NestedScrollView>
+
+    <!--  Bottom Bar  -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_app_bar"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/home"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/home_icon"
+            android:text="Aktifitas"
+            android:drawablePadding="6dp"
+            android:gravity="center_horizontal"
+            app:drawableTint="@color/md_theme_tertiary"
+            android:textColor="@color/md_theme_tertiary" />
+
+        <TextView
+            android:id="@+id/history"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Riwayat"
+            android:gravity="center_horizontal"
+            android:drawablePadding="6dp"
+            android:drawableTop="@drawable/report_icon"
+            app:tint="@color/md_theme_primary"/>
+
+        <TextView
+            android:id="@+id/report"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/pie_chart_40px"
+            android:text="Laporan"
+            android:gravity="center_horizontal"
+            app:drawableTint="@color/md_theme_tertiary"
+            android:textColor="@color/md_theme_tertiary"/>
+
+        <TextView
+            android:id="@+id/profile"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Akun"
+            android:gravity="center_horizontal"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/profile_icon"
+            app:drawableTint="@color/md_theme_tertiary"
+            android:textColor="@color/md_theme_tertiary"/>
+    </LinearLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_bar"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        app:lottie_rawRes="@raw/loading_linear"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        />
+
 </RelativeLayout>

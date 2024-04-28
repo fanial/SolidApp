@@ -8,6 +8,7 @@ import com.solidecoteknologi.data.RequestRegister
 import com.solidecoteknologi.data.RequestStoreWaste
 import com.solidecoteknologi.data.ResponseCategory
 import com.solidecoteknologi.data.ResponseDailyReport
+import com.solidecoteknologi.data.ResponseHistory
 import com.solidecoteknologi.data.ResponseLogin
 import com.solidecoteknologi.data.ResponseMonthlyReport
 import com.solidecoteknologi.data.ResponseOrganization
@@ -95,5 +96,11 @@ interface Service {
         @Part("organization") organization: RequestBody?,
         @Part("password") passwordBaru: RequestBody?,
     ): Response<ResponseUpdateProfile>
+
+    @GET("transaction/list")
+    suspend fun history(
+        @Header("Authorization") token: String
+    ): Response<ResponseHistory>
+
 }
 
