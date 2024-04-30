@@ -37,16 +37,16 @@ class AuthViewModel @Inject constructor(private val store: DataStoreManager, pri
             store.saveDataStore(token, idAcc, status)
         }
     }
-    fun setStatus(status: Boolean){
+    fun saveRoleAccount(role : String){
         viewModelScope.launch {
-            store.saveStatus(status)
+            store.saveRoleAccount(role)
         }
     }
 
     fun  getStoredAccount() = store.getStoredValues().asLiveData()
     fun getToken() = store.getToken().asLiveData()
 
-    fun getName() = store.getIdAccount().asLiveData()
+    fun getRoleAccount() = store.getRoleAccount().asLiveData()
 
     fun getStatus()= store.getStatus().asLiveData()
     fun logout(){

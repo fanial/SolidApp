@@ -185,9 +185,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun logout() {
-        model.logout(token)
-    }
+//    private fun logout() {
+//        model.logout(token)
+//    }
 
     private fun setupObservers() {
 

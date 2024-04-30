@@ -401,6 +401,9 @@ class ReportFragment : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         date = currentDateTime.format(formatter)
 
+        if (model.getRoleAccount().value != "PIC"){
+            binding.bannerThankyou.visibility = View.GONE
+        }
     }
 
     private fun setupListener() {

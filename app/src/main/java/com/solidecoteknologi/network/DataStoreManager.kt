@@ -14,8 +14,8 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
         pref[TOKEN] ?: ""
     }
 
-    fun getIdAccount(): Flow<String> = setDataStore.data.map { pref ->
-        pref[IDACC] ?: ""
+    fun getRoleAccount(): Flow<String> = setDataStore.data.map { pref ->
+        pref[ACCOUNT] ?: ""
     }
 
     fun getStatus(): Flow<Boolean> = setDataStore.data.map { pref ->
@@ -29,9 +29,9 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
         }
     }
 
-    suspend fun saveStatus(isStatus : Boolean) {
+    suspend fun saveRoleAccount(isRole : String) {
         setDataStore.edit { preferences ->
-            preferences[ISLOGIN] = isStatus
+            preferences[ACCOUNT] = isRole
         }
     }
 
