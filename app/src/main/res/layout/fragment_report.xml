@@ -31,7 +31,7 @@
                 android:layout_below="@id/banner_thankyou"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="400dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_marginBottom="20dp">
@@ -50,7 +50,33 @@
                         android:layout_height="wrap_content"
                         android:text="Volume Debit Harian(kg)"
                         android:gravity="center"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:id="@+id/tgl_amount_harian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2024-04-30"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"/>
+                    <com.google.android.material.card.MaterialCardView
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/white"
+                        android:layout_marginTop="10dp"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/list_detail_amount_harian"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/list_detail_report"
+                            />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/amount_chart_harian"
@@ -74,7 +100,35 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textStyle="bold"
-                        android:text="Nilai Jejak Karbon Harian(CO2e)"/>
+                        android:text="Nilai Jejak Karbon Harian(CO2e)"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tgl_carbon_harian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2024-04-30"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/white"
+                        android:layout_marginTop="10dp"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/list_detail_carbon_harian"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/list_detail_report"
+                            />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/carbon_chart_harian"
@@ -89,7 +143,7 @@
                 android:layout_below="@id/frame_harian"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="400dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_marginBottom="20dp">
@@ -108,7 +162,35 @@
                         android:layout_height="wrap_content"
                         android:text="Volume Debit Bulanan(kg)"
                         android:gravity="center"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tgl_amount_bulanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2024-04-30"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/white"
+                        android:layout_marginTop="10dp"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/list_detail_amount_bulanan"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/list_detail_report"
+                            />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/amount_chart_bulanan"
@@ -133,7 +215,35 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textStyle="bold"
-                        android:text="Nilai Jejak Karbon Bulanan(CO2e)"/>
+                        android:text="Nilai Jejak Karbon Bulanan(CO2e)"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/tgl_carbon_bulanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2024-04-30"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/white"
+                        android:layout_marginTop="10dp"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/list_detail_carbon_bulanan"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/list_detail_report"
+                            />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/carbon_chart_bulanan"

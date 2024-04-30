@@ -9,3 +9,15 @@ data class ResponseResult(
     @field:SerializedName("success")
     val status: Boolean,
 )
+
+data class DataItemDetailReport(
+
+    @field:SerializedName("amount")
+    val amount: Float,
+
+    @field:SerializedName("carbon")
+    val carbon: Float,
+
+    @field:SerializedName("category")
+    val category: String
+)

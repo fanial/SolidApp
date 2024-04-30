@@ -11,15 +11,19 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.material.snackbar.Snackbar
 import com.solidecoteknologi.R
+import com.solidecoteknologi.data.DataItemDetailReport
 import com.solidecoteknologi.data.ResponseDailyReport
 import com.solidecoteknologi.data.ResponseMonthlyReport
 import com.solidecoteknologi.databinding.FragmentReportBinding
+import com.solidecoteknologi.view.adapter.ListDetailAmountReportAdapter
+import com.solidecoteknologi.view.adapter.ListDetailCarbonReportAdapter
 import com.solidecoteknologi.viewmodel.AuthViewModel
 import com.solidecoteknologi.viewmodel.TransactionViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +45,8 @@ class ReportFragment : Fragment() {
 
     private lateinit var flipInAnimator: ObjectAnimator
     private lateinit var flipOutAnimator: ObjectAnimator
+    private val amountAdapter by lazy { ListDetailAmountReportAdapter() }
+    private val carbonAdapter by lazy { ListDetailCarbonReportAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,10 +65,6 @@ class ReportFragment : Fragment() {
     }
 
     private fun setupObservers() {
-
-        val currentDate = LocalDate.now()
-        startDate = currentDate.withDayOfMonth(1).toString()
-        endDate = currentDate.withDayOfMonth(currentDate.lengthOfMonth()).toString()
 
         model.getToken().observe(viewLifecycleOwner){
             val token = it
@@ -107,6 +109,15 @@ class ReportFragment : Fragment() {
             if (res != null){
                 setDataChartAmount(res)
                 setDataChartCarbon(res)
+                val data = res.data.map { dailyItem ->
+                    DataItemDetailReport(
+                        dailyItem.amount,
+                        dailyItem.carbon,
+                        dailyItem.category
+                    )
+                }
+                amountAdapter.submitList(data)
+                carbonAdapter.submitList(data)
                 binding.bannerThankyou.text = "Terima kasih anda telah membantu mengurangi emisi sebesar ${res.totalCarbon} C02e per hari ini"
             }
         }
@@ -116,9 +127,50 @@ class ReportFragment : Fragment() {
             if (res != null){
                 setDataChartMonthlyAmount(res)
                 setDataChartMonthlyCarbon(res)
+                val data = res.data.map { monthlyItem ->
+                    DataItemDetailReport(
+                        monthlyItem.amount,
+                        monthlyItem.carbon,
+                        monthlyItem.category
+                    )
+                }
+                amountAdapter.submitList(data)
+                carbonAdapter.submitList(data)
             }
         }
 
+        val currentDate = LocalDate.now()
+        startDate = currentDate.withDayOfMonth(1).toString()
+        endDate = currentDate.withDayOfMonth(currentDate.lengthOfMonth()).toString()
+
+        val layoutAmountHarian = LinearLayoutManager(context)
+        binding.listDetailAmountHarian.adapter = amountAdapter
+        binding.listDetailAmountHarian.layoutManager = layoutAmountHarian
+
+        val layoutCarbonHarian = LinearLayoutManager(context)
+        binding.listDetailCarbonHarian.adapter = carbonAdapter
+        binding.listDetailCarbonHarian.layoutManager = layoutCarbonHarian
+
+        val layoutAmountBulanan = LinearLayoutManager(context)
+        binding.listDetailAmountBulanan.adapter = amountAdapter
+        binding.listDetailAmountBulanan.layoutManager = layoutAmountBulanan
+
+        val layoutCarbonBulanan = LinearLayoutManager(context)
+        binding.listDetailCarbonBulanan.adapter = carbonAdapter
+        binding.listDetailCarbonBulanan.layoutManager = layoutCarbonBulanan
+
+        binding.tglAmountHarian.text = date
+        binding.tglCarbonHarian.text = date
+        binding.tglAmountBulanan.text = buildString {
+            append(startDate)
+            append(" - ")
+            append(endDate)
+        }
+        binding.tglCarbonBulanan.text = buildString {
+            append(startDate)
+            append(" - ")
+            append(endDate)
+        }
     }
 
     private fun setDataChartMonthlyCarbon(res: ResponseMonthlyReport) {
