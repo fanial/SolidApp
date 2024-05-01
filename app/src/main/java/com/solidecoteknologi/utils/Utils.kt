@@ -8,13 +8,14 @@ fun formatDate(inputDateString: String): String {
     val inputFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSX"
     val outputFormat = "dd MMM yyyy, HH:mm"
     val timeZone = TimeZone.getTimeZone("UTC")
+    val tz = TimeZone.getTimeZone("UTC+7")
     val inputParser = SimpleDateFormat(inputFormat, Locale.getDefault())
     inputParser.timeZone = timeZone
 
     val date = inputParser.parse(inputDateString)
 
     val outputFormatter = SimpleDateFormat(outputFormat, Locale.getDefault())
-    outputFormatter.timeZone = timeZone
+    outputFormatter.timeZone = tz
 
     return outputFormatter.format(date)
 }

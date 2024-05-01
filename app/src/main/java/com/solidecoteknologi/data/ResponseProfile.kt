@@ -16,6 +16,9 @@ data class ResponseProfile(
 
 data class DataProfile(
 
+	@field:SerializedName("role_text")
+	val roleText: String,
+
 	@field:SerializedName("role")
 	val role: String,
 

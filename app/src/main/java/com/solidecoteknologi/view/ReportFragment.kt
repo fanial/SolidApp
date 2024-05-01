@@ -225,12 +225,10 @@ class ReportFragment : Fragment() {
         binding.carbonChartBulanan.apply {
             setUsePercentValues(true)
             setDrawSliceText(false)
-            setMinAngleForSlices(10f)
+            setMinAngleForSlices(0f)
             description.isEnabled = false
             setEntryLabelColor(android.R.color.black)
             setHoleColor(android.R.color.transparent)
-            setTransparentCircleColor(android.R.color.transparent)
-            setTransparentCircleAlpha(0)
             holeRadius = 0f
             transparentCircleRadius = 0f
             setDrawEntryLabels(false)
@@ -242,6 +240,7 @@ class ReportFragment : Fragment() {
     }
 
     private fun setDataChartMonthlyAmount(res: ResponseMonthlyReport) {
+
         val data = res.data
         // Prepare data entries for the PieChart
         val entries = ArrayList<PieEntry>()
@@ -292,12 +291,10 @@ class ReportFragment : Fragment() {
         binding.amountChartBulanan.apply {
             setUsePercentValues(true)
             setDrawSliceText(false)
-            setMinAngleForSlices(10f)
+            setMinAngleForSlices(0f)
             description.isEnabled = false
             setEntryLabelColor(android.R.color.black)
             setHoleColor(android.R.color.transparent)
-            setTransparentCircleColor(android.R.color.transparent)
-            setTransparentCircleAlpha(0)
             holeRadius = 0f
             transparentCircleRadius = 0f
             setDrawEntryLabels(false)
@@ -360,12 +357,10 @@ class ReportFragment : Fragment() {
         binding.carbonChartHarian.apply {
             setUsePercentValues(true)
             setDrawSliceText(false)
-            setMinAngleForSlices(10f)
+            setMinAngleForSlices(0f)
             description.isEnabled = false
             setEntryLabelColor(android.R.color.black)
             setHoleColor(android.R.color.transparent)
-            setTransparentCircleColor(android.R.color.transparent)
-            setTransparentCircleAlpha(0)
             holeRadius = 0f
             transparentCircleRadius = 0f
             setDrawEntryLabels(false)
@@ -383,6 +378,7 @@ class ReportFragment : Fragment() {
         val colors = mutableListOf<Int>()
         val categoryLabels = mutableListOf<String>()
 
+        //.filter { it.amount != 0.toFloat() }
         data.map {
             entries.add(
                 PieEntry(
@@ -428,12 +424,10 @@ class ReportFragment : Fragment() {
         binding.amountChartHarian.apply {
             setUsePercentValues(true)
             setDrawSliceText(false)
-            setMinAngleForSlices(10f)
+            setMinAngleForSlices(0f)
             description.isEnabled = false
             setEntryLabelColor(android.R.color.black)
             setHoleColor(android.R.color.transparent)
-            setTransparentCircleColor(android.R.color.transparent)
-            setTransparentCircleAlpha(0)
             holeRadius = 0f
             transparentCircleRadius = 0f
             setDrawEntryLabels(false)
@@ -453,9 +447,6 @@ class ReportFragment : Fragment() {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         date = currentDateTime.format(formatter)
 
-        if (model.getRoleAccount().value != "PIC"){
-            binding.bannerThankyou.visibility = View.GONE
-        }
     }
 
     private fun setupListener() {

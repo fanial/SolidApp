@@ -104,11 +104,11 @@ class HomeFragment : Fragment() {
                 token = data.token
                 idAccount = data.idAccount
                 Log.i("TAG", "TOKEN: $token")
-                checkAccount()
+                //checkAccount()
             }
         }
 
-        model.profile().observe(viewLifecycleOwner) {
+        /*model.profile().observe(viewLifecycleOwner) {
             if (it != null) {
                 if (!it.success) {
                     model.logout()
@@ -116,7 +116,7 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
                 }
             }
-        }
+        }*/
 
         modelTransaction.dataCategory().observe(viewLifecycleOwner){ listCat ->
             if (listCat != null){
@@ -217,7 +217,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun checkAccount() {
+    /*private fun checkAccount() {
         model.getProfile(token)
-    }
+    }*/
 }

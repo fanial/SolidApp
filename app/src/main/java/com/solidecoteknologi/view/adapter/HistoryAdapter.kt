@@ -15,7 +15,7 @@ class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.ListViewHolder>() {
     class ListViewHolder(private val binding : CardHistoryBinding): RecyclerView.ViewHolder(binding.root){
         fun setItem(item: DataHistoryItem) {
             binding.apply {
-                datetime.text = formatDate(item.createdAt)
+                datetime.text = item.createdAt
                 amount.text = item.weight
                 type.text = item.category.name
                 when (item.category.name){

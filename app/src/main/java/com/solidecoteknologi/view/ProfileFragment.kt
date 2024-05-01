@@ -92,8 +92,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            model.logout()
-            findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+            model.logout(token)
         }
         binding.history.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_historyFragment)
@@ -186,7 +185,7 @@ class ProfileFragment : Fragment() {
     }
 
 //    private fun logout() {
-//        model.logout(token)
+//
 //    }
 
     private fun setupObservers() {
@@ -248,7 +247,7 @@ class ProfileFragment : Fragment() {
                     val data = it.data
                     binding.edNama.setText(data.name)
                     binding.edEmail.setText(data.email)
-                    binding.edRole.setText(data.role)
+                    binding.edRole.setText(data.roleText)
                     binding.edInstansi.setText(data.organization.name)
                     instansi = data.organization.id.toString()
                     if (data.avatar != null){
@@ -260,6 +259,13 @@ class ProfileFragment : Fragment() {
                 } else {
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+
+        model.isLogout().observe(viewLifecycleOwner){
+            if (it == true){
+                model.logout()
+                findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
             }
         }
     }
