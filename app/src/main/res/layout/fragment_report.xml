@@ -24,6 +24,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/card_gradient"
                 android:layout_margin="20dp"
+                android:textSize="18sp"
                 />
 
             <FrameLayout
@@ -45,6 +46,7 @@
                     android:layout_height="match_parent"
                     android:padding="20dp"
                     android:background="@drawable/shape_disable_edit_text">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -53,6 +55,7 @@
                         android:textStyle="bold"
                         android:layout_marginBottom="5dp"
                         android:textSize="16sp"/>
+
                     <TextView
                         android:id="@+id/tgl_amount_harian"
                         android:layout_width="match_parent"
@@ -60,6 +63,7 @@
                         android:text="2024-04-30"
                         android:textStyle="bold"
                         android:gravity="center_horizontal"/>
+
                     <com.google.android.material.card.MaterialCardView
                         style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
@@ -67,15 +71,44 @@
                         app:cardBackgroundColor="@color/white"
                         android:layout_marginTop="10dp"
                         >
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/list_detail_amount_harian"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="5dp"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:itemCount="3"
-                            tools:listitem="@layout/list_detail_report"
-                            />
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/list_detail_amount_harian"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/list_detail_report"
+                                />
+
+                            <TextView
+                                android:id="@+id/label_total"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_below="@id/list_detail_amount_harian"
+                                android:text="Total Debit"
+                                android:textStyle="bold"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <TextView
+                                android:id="@+id/total_debit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@id/list_detail_amount_harian"
+                                android:layout_toEndOf="@+id/label_total"
+                                android:text="0.0"
+                                android:gravity="end"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginBottom="10dp"/>
+                        </RelativeLayout>
+
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
@@ -119,15 +152,44 @@
                         app:cardBackgroundColor="@color/white"
                         android:layout_marginTop="10dp"
                         >
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/list_detail_carbon_harian"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="5dp"
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:itemCount="3"
-                            tools:listitem="@layout/list_detail_report"
-                            />
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/list_detail_carbon_harian"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/list_detail_report"
+                                />
+
+                            <TextView
+                                android:id="@+id/label_total_carbon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_below="@id/list_detail_carbon_harian"
+                                android:text="Total Debit"
+                                android:textStyle="bold"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <TextView
+                                android:id="@+id/total_carbon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@id/list_detail_carbon_harian"
+                                android:layout_toEndOf="@+id/label_total_carbon"
+                                android:text="0.0"
+                                android:gravity="end"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginBottom="10dp"/>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
@@ -181,15 +243,43 @@
                         app:cardBackgroundColor="@color/white"
                         android:layout_marginTop="10dp"
                         >
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/list_detail_amount_bulanan"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="5dp"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:itemCount="3"
-                            tools:listitem="@layout/list_detail_report"
-                            />
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/list_detail_amount_bulanan"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/list_detail_report"
+                                />
+
+                            <TextView
+                                android:id="@+id/label_total_amount_bulanan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_below="@id/list_detail_amount_bulanan"
+                                android:text="Total Debit"
+                                android:textStyle="bold"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <TextView
+                                android:id="@+id/total_amount_bulanan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@id/list_detail_amount_bulanan"
+                                android:layout_toEndOf="@+id/label_total_amount_bulanan"
+                                android:text="0.0"
+                                android:gravity="end"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginBottom="10dp"/>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
@@ -234,15 +324,44 @@
                         app:cardBackgroundColor="@color/white"
                         android:layout_marginTop="10dp"
                         >
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/list_detail_carbon_bulanan"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="5dp"
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            tools:itemCount="3"
-                            tools:listitem="@layout/list_detail_report"
-                            />
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/list_detail_carbon_bulanan"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/list_detail_report"
+                                />
+
+                            <TextView
+                                android:id="@+id/label_total_carbon_bulanan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_below="@id/list_detail_carbon_bulanan"
+                                android:text="Total Debit"
+                                android:textStyle="bold"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginBottom="10dp"/>
+
+                            <TextView
+                                android:id="@+id/total_carbon_bulanan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@id/list_detail_carbon_bulanan"
+                                android:layout_toEndOf="@+id/label_total_carbon_bulanan"
+                                android:text="0.0"
+                                android:gravity="end"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginBottom="10dp"/>
+                        </RelativeLayout>
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.github.mikephil.charting.charts.PieChart
@@ -253,38 +372,42 @@
                 </LinearLayout>
             </FrameLayout>
 
+            <LinearLayout
+                android:layout_below="@id/frame_bulanan"
+                android:orientation="vertical"
+                android:id="@+id/banner_percentage_error"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:foreground="@drawable/bg_home"
+                android:foregroundGravity="bottom"
+                android:background="@drawable/card_gradient"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Persentase Error"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/tv_percentage_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Persentase Error"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-    <!--<com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Per Hari"
-            android:icon="@drawable/day_icon"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Per Bulan"
-            android:icon="@drawable/month_icon"
-            />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
-        android:layout_below="@id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/layout_bottom_bar"
-        />
--->
     <!--  Bottom Bar  -->
     <LinearLayout
         android:id="@+id/linearLayout"

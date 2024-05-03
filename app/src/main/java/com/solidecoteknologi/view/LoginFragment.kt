@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -55,6 +56,9 @@ class LoginFragment : Fragment() {
         setupObservers()
         setupViews()
         setupBackHandler()
+        model.getStoredAccount().observe(viewLifecycleOwner){
+            Log.i("TAG", "onViewCreated: $it")
+        }
     }
 
     private fun setupViews() {

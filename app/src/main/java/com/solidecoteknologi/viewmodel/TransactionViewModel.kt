@@ -13,6 +13,7 @@ import com.solidecoteknologi.data.ResponseCategory
 import com.solidecoteknologi.data.ResponseDailyReport
 import com.solidecoteknologi.data.ResponseHistory
 import com.solidecoteknologi.data.ResponseMonthlyReport
+import com.solidecoteknologi.data.ResponsePresentaseError
 import com.solidecoteknologi.data.ResponseStoreWaste
 import com.solidecoteknologi.network.Service
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -236,6 +237,47 @@ class TransactionViewModel @Inject constructor(private val service: Service): Vi
             Log.e(ContentValues.TAG, "$errorMessage")
         }
     }
+
+
+    private val dataPresentaseError : MutableLiveData<ResponsePresentaseError?> = MutableLiveData()
+    fun dataPresentaseError() : MutableLiveData<ResponsePresentaseError?> {
+        return dataPresentaseError
+    }
+    fun presentaseError(token: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            try {
+                val response = service.percentageError(token)
+                handlePercentageErrorResponse(response)
+            } catch (t: Throwable) {
+                handleFailure(t)
+            }
+        }
+    }
+    private fun handlePercentageErrorResponse(response: Response<ResponsePresentaseError>) {
+        _loading.value = false
+        val body = response.body()
+        if (response.isSuccessful){
+            if (body != null){
+                if (body.success){
+                    dataPresentaseError.postValue(body)
+                    Log.i(ContentValues.TAG, "onResponse: Success Load Response")
+                } else {
+                    dataPresentaseError.postValue(null)
+                    message.value = body.message
+                    Log.i(ContentValues.TAG, "onResponse: Failed Load Response")
+                }
+            } else {
+                dataPresentaseError.postValue(null)
+                Log.e(ContentValues.TAG, "onResponse: Data Response NULL")
+            }
+        } else {
+            errorMessage.value = "${response.code()}: ${response.message()}"
+            Log.e(ContentValues.TAG, "$errorMessage")
+        }
+    }
+
+
 
     //Handle Failure
     private fun handleFailure(t: Throwable) {

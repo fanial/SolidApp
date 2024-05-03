@@ -12,6 +12,7 @@ import com.solidecoteknologi.data.ResponseHistory
 import com.solidecoteknologi.data.ResponseLogin
 import com.solidecoteknologi.data.ResponseMonthlyReport
 import com.solidecoteknologi.data.ResponseOrganization
+import com.solidecoteknologi.data.ResponsePresentaseError
 import com.solidecoteknologi.data.ResponseProfile
 import com.solidecoteknologi.data.ResponseRefreshToken
 import com.solidecoteknologi.data.ResponseRegister
@@ -101,6 +102,11 @@ interface Service {
     suspend fun history(
         @Header("Authorization") token: String
     ): Response<ResponseHistory>
+
+    @GET("transaction/percentage_error")
+    suspend fun percentageError(
+        @Header("Authorization") token: String
+    ): Response<ResponsePresentaseError>
 
 }
 

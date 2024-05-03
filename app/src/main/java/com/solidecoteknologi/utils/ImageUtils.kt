@@ -41,27 +41,30 @@ fun bitmapToUri(context: Context, bitmap: Bitmap): Uri? {
 class UriToFile(context: Context) {
     private val applicationContext = context.applicationContext
 
-    fun getImageBody(imageUri: Uri): File {
-        val parcelFileDescriptor = applicationContext.contentResolver.openFileDescriptor(
-            imageUri,
-            "r",
-            null
-        )
+    fun getImageBody(imageUri: Uri): File? {
+        try {
+            val parcelFileDescriptor = applicationContext.contentResolver.openFileDescriptor(
+                imageUri,
+                "r",
+                null
+            ) ?: return null // Return null if file descriptor couldn't be obtained
 
-        val file = File(
-            applicationContext.cacheDir,
-            applicationContext.contentResolver.getFileName(imageUri)
-        )
+            val fileName = applicationContext.contentResolver.getFileName(imageUri)
+            val file = File(applicationContext.cacheDir, fileName)
 
-        parcelFileDescriptor?.use { pfd ->
-            FileInputStream(pfd.fileDescriptor).use { inputStream ->
-                FileOutputStream(file).use { outputStream ->
-                    inputStream.copyTo(outputStream)
+            parcelFileDescriptor.use { pfd ->
+                FileInputStream(pfd.fileDescriptor).use { inputStream ->
+                    FileOutputStream(file).use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                    }
                 }
             }
+            return file
+        } catch (e: Exception) {
+            // Handle any exceptions, log them, or return null
+            e.printStackTrace()
+            return null
         }
-
-        return file
     }
 
     @SuppressLint("Range")

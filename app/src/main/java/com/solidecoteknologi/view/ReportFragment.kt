@@ -70,6 +70,12 @@ class ReportFragment : Fragment() {
             val token = it
             modelTransaction.monthlyReport(token, startDate, endDate)
             modelTransaction.dailyReport(token, date)
+            model.getRoleAccount().observe(viewLifecycleOwner){
+                if (it == "pic"){
+                    binding.bannerPercentageError.visibility = View.VISIBLE
+                    modelTransaction.presentaseError(token)
+                }
+            }
         }
 
         model.errorMessageObserver().observe(viewLifecycleOwner){ msg ->
@@ -104,11 +110,19 @@ class ReportFragment : Fragment() {
             }
         }
 
+        modelTransaction.dataPresentaseError().observe(viewLifecycleOwner){
+            if (it != null){
+                binding.tvPercentageError.text = it.data.toString()
+            }
+        }
+
         //Daily Report
         modelTransaction.dataDaily().observe(viewLifecycleOwner){ res ->
             if (res != null){
+
                 setDataChartAmount(res)
                 setDataChartCarbon(res)
+
                 val data = res.data.map { dailyItem ->
                     DataItemDetailReport(
                         dailyItem.amount,
@@ -118,6 +132,8 @@ class ReportFragment : Fragment() {
                 }
                 amountAdapter.submitList(data)
                 carbonAdapter.submitList(data)
+                binding.totalDebit.text = res.totalVolume.toString()
+                binding.totalCarbon.text = res.totalCarbon.toString()
                 binding.bannerThankyou.text = "Terima kasih anda telah membantu mengurangi emisi sebesar ${res.totalCarbon} C02e per hari ini"
             }
         }
@@ -136,6 +152,8 @@ class ReportFragment : Fragment() {
                 }
                 amountAdapter.submitList(data)
                 carbonAdapter.submitList(data)
+                binding.totalAmountBulanan.text = res.totalAmount.toString()
+                binding.totalCarbonBulanan.text = res.totalCarbon.toString()
             }
         }
 

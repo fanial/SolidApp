@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseMonthlyReport(
 
+	@field:SerializedName("total_volume")
+	val totalAmount: Float,
+
 	@field:SerializedName("total_carbon")
 	val totalCarbon: Float,
 

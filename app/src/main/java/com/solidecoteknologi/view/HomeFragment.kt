@@ -64,6 +64,9 @@ class HomeFragment : Fragment() {
         }
 
         Log.i("TAG", "HOME: $token")
+        model.getStoredAccount().observe(viewLifecycleOwner){
+            Log.i("TAG", "onViewCreated: $it")
+        }
     }
     private fun setupObservers() {
 
@@ -104,19 +107,21 @@ class HomeFragment : Fragment() {
                 token = data.token
                 idAccount = data.idAccount
                 Log.i("TAG", "TOKEN: $token")
-                //checkAccount()
+                checkAccount()
             }
         }
 
-        /*model.profile().observe(viewLifecycleOwner) {
+        model.profile().observe(viewLifecycleOwner) {
             if (it != null) {
                 if (!it.success) {
                     model.logout()
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                } else {
+                    model.saveRoleAccount(it.data.role)
                 }
             }
-        }*/
+        }
 
         modelTransaction.dataCategory().observe(viewLifecycleOwner){ listCat ->
             if (listCat != null){
@@ -139,7 +144,7 @@ class HomeFragment : Fragment() {
                         binding.edQty.clearFocus()
                         Handler(Looper.getMainLooper()).postDelayed({
                             binding.layoutSuccess.visibility = View.GONE
-                        }, 1300)
+                        }, 2000)
                     } else {
                         Snackbar.make(binding.root, it.message , Snackbar.LENGTH_SHORT)
                             .show()
@@ -207,6 +212,7 @@ class HomeFragment : Fragment() {
         binding.edKategori.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 idCategory = listCategory[position].id.toString()
+                hideKeyboardQty()
                 binding.edKategori.clearFocus()
             }
 
@@ -216,8 +222,7 @@ class HomeFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(binding.edQty.windowToken, 0)
     }
 
-
-    /*private fun checkAccount() {
+    private fun checkAccount() {
         model.getProfile(token)
-    }*/
+    }
 }

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -51,11 +52,11 @@ class ProfileFragment : Fragment() {
 
     private val model : AuthViewModel by viewModels()
     private var token = ""
-    private var photoProfile: File? = null
     private var instansi = ""
     private var idAccount = ""
     private  var listInstansi = listOf<DataItem>()
-
+    private var cameraImageUri: Uri? = null
+    private var photoProfile : File? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -115,7 +116,7 @@ class ProfileFragment : Fragment() {
             val name = binding.edNama.text.toString()
             val organization = instansi
             val password = binding.edPassword.text.toString()
-            if (photoProfile ==  null){
+            if (cameraImageUri ==  null){
                 model.updateProfile(
                     token,
                     idAccount.toRequestBody("text/plain".toMediaTypeOrNull()),
@@ -123,22 +124,6 @@ class ProfileFragment : Fragment() {
                     null,
                     organization.toRequestBody("text/plain".toMediaTypeOrNull()),
                     password.toRequestBody("text/plain".toMediaTypeOrNull())
-                )
-            } else if (password.isEmpty()){
-                val avatar = photoProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                val imageMultipart : MultipartBody.Part = MultipartBody.Part.createFormData(
-                    "avatar",
-                    photoProfile?.name,
-                    avatar
-                )
-
-                model.updateProfile(
-                    token,
-                    idAccount.toRequestBody("text/plain".toMediaTypeOrNull()),
-                    name.toRequestBody("text/plain".toMediaTypeOrNull()),
-                    imageMultipart,
-                    organization.toRequestBody("text/plain".toMediaTypeOrNull()),
-                    null
                 )
             } else {
                 val avatar = photoProfile!!.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -250,7 +235,11 @@ class ProfileFragment : Fragment() {
                     binding.edRole.setText(data.roleText)
                     binding.edInstansi.setText(data.organization.name)
                     instansi = data.organization.id.toString()
-                    if (data.avatar != null){
+                    if (cameraImageUri != null) {
+                        // If the camera image Uri is not null, load the image from the camera
+                        binding.photoProfile.setImageURI(cameraImageUri)
+                    } else if (data.avatar != null) {
+                        // If the camera image Uri is null, load the image from the data
                         loadImage(requireContext(), data.avatar, binding.photoProfile)
                     }
                     if (data.emailVerifiedAt == null){
@@ -337,6 +326,7 @@ class ProfileFragment : Fragment() {
                         binding.photoProfile.setImageBitmap(imageBitmap)
                         val uri = bitmapToUri(requireContext(), imageBitmap)
                         photoProfile = UriToFile(requireContext()).getImageBody(uri!!)
+                        cameraImageUri = uri
                         Log.i(ContentValues.TAG, "URI CAMERA: $uri")
                     }
 
@@ -346,7 +336,8 @@ class ProfileFragment : Fragment() {
                             binding.photoProfile.setImageURI(selectedImageUri)
                             lifecycleScope.launch {
                                 photoProfile = UriToFile(requireContext()).getImageBody(selectedImageUri)
-                                Log.i("TAG", "FOTO: $photoProfile")
+                                cameraImageUri = selectedImageUri
+                                Log.i("TAG", "FOTO: $selectedImageUri")
                             }
                         }
                     }

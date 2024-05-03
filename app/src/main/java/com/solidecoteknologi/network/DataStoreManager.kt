@@ -43,10 +43,8 @@ class DataStoreManager @Inject constructor(private val setDataStore : DataStore<
     }
 
     suspend fun delete(){
-        setDataStore.edit {
-            setDataStore.edit { pref ->
-                pref.clear()
-            }
+        setDataStore.edit { pref ->
+            pref.clear()
         }
     }
 
