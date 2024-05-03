@@ -33,6 +33,7 @@ import com.solidecoteknologi.R
 import com.solidecoteknologi.data.DataItem
 import com.solidecoteknologi.databinding.FragmentProfileBinding
 import com.solidecoteknologi.utils.UriToFile
+import com.solidecoteknologi.utils.bitmapToFile
 import com.solidecoteknologi.utils.bitmapToUri
 import com.solidecoteknologi.utils.loadImage
 import com.solidecoteknologi.viewmodel.AuthViewModel
@@ -325,8 +326,10 @@ class ProfileFragment : Fragment() {
                         val imageBitmap = data?.extras?.get("data") as Bitmap
                         binding.photoProfile.setImageBitmap(imageBitmap)
                         val uri = bitmapToUri(requireContext(), imageBitmap)
-                        photoProfile = UriToFile(requireContext()).getImageBody(uri!!)
                         cameraImageUri = uri
+                        lifecycleScope.launch {
+                            photoProfile = bitmapToFile(requireContext(), imageBitmap)
+                        }
                         Log.i(ContentValues.TAG, "URI CAMERA: $uri")
                     }
 

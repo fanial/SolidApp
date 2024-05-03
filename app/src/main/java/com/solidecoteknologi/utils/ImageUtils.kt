@@ -38,6 +38,28 @@ fun bitmapToUri(context: Context, bitmap: Bitmap): Uri? {
     return null
 }
 
+
+fun bitmapToFile(context: Context, bitmap: Bitmap): File? {
+    // Create a file in the application's internal storage directory
+    val wrapper = ContextWrapper(context)
+    val file = File(wrapper.cacheDir, "${System.currentTimeMillis()}.jpg")
+
+    try {
+        // Write the Bitmap data to the file
+        val stream: OutputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        stream.flush()
+        stream.close()
+
+        return file // Return the file
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return null
+}
+
+
+
 class UriToFile(context: Context) {
     private val applicationContext = context.applicationContext
 
