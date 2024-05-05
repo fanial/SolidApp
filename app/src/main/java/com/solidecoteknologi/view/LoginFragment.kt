@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -55,7 +56,12 @@ class LoginFragment : Fragment() {
         setupListener()
         setupObservers()
         setupViews()
-        setupBackHandler()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
+            return@addCallback
+        }
+
         model.getStoredAccount().observe(viewLifecycleOwner){
             Log.i("TAG", "onViewCreated: $it")
         }
@@ -162,23 +168,6 @@ class LoginFragment : Fragment() {
         binding.btnDaftar.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-    }
-
-
-    private fun setupBackHandler() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val currentDestinationId = findNavController().currentDestination?.id
-
-                if (currentDestinationId == R.id.loginFragment) {
-                    findNavController().navigate(R.id.onboardingFragment)
-                } else {
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
 }
